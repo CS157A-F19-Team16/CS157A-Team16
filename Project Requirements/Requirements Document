@@ -5,3 +5,25 @@ Contribution:
   George: Non-functional Issues + Editing
   Jeffery: Project Overview + System Environment Diagram
   Stan: Functional Requirements methods
+
+Project Overview
+
+    This application will highlight important details of outdoor rock climbing routes done and shared by other users at various locations. A park will have multiple rock structures to climb and each one has multiple routes, and routes will have details on how to climb it as well as the difficulty. This information will be stored in the database application while keeping an organized hierarchy structure. 
+  Stakeholders in this project are the users and the developers. Users include outdoor climbers who can research parks and rock climbing locations to find the best routes for them. Verified users with the title explorer can add routes to the database. With the details of difficulty grade, sending tips, and gear setting logistics, users can prepare and collect target routes for a trip.
+  The application is important because having details of routes before outdoor climbing is critical for preparation. For an optimal climbing trip, one should have information about the routes of their destination and have details on the routes they want to climb for safety, time, and proper gear preparation. Comments are also implemented on routes to share feedback and get information from other users.
+
+System Environment
+
+  This application will follow a three tier architecture. The web client layer will be accessed through personal hardware devices. The client will written in HTML, CSS, and Javascript, which may utilize some front-end frameworks such as React, Bulma, or the Material UI. These tools will help create a more seamless UI interface.
+    The web server will be managed through Django. Django is based in Python and will be driven with a MySQL database containing the client data.
+
+Hardware and Software
+  - Apache Web Server
+RDBMS
+  - MySQL Community Server
+Languages
+  - Python 3
+  - JavaScriptXML
+  - HTML
+  - CSS
+  - SQL
