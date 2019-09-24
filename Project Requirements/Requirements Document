@@ -114,3 +114,40 @@ Explorer can add routes they have discovered that are not previously in the data
 -Explorer can comment as the explorer on the comments of the route
 
 Climbers can comment on a route page
+
+Non-functional Issues
+
+Graphic User Interfaces:
+- To create Graphical User Interfaces, Adobe XD will be used to bring designs and prototypes. Wireframes for the web application can be created in XD as well.
+For the actual design of the application, the initial start screen in the web browser will contain a search bar in the middle of the screen and on the right side of that bar will contain a drop down menu for selecting what parameter to search by: location or name of park. At the top right of the page, there will be a login and signup button where users can login to their accounts, and if the sign up, they will be redirected to a sign up page where users will have to fill out information for their account. After a user searches for something on the start screen, the application will query for that information and display a new screen where the search bar is located near the top of the browser page and the results underneath it. Furthermore, there will be another drop down menu next to a ‘sort by’ text that allows users to select how to sort the results. The actual results will be displayed in boxes that extend down with each one containing the relevant information about each entry.    
+
+Reliability
+- Our web application must have robustness, meaning it should tolerate a lot of users accessing at the same time without causing any problems. 
+Our website should not cause any harm to the user
+
+Usability
+- Users should be able to SELECT and search for a list of selected parks.
+- Search bar should work by representing parks in the list.
+- Users should be able to add their own found paths from a certain park.
+- Users should be able to choose a climbing path by specified difficulty grade.
+
+Supportability
+- Extending the website should be easy.
+- System should be maintained without spending too much money and time on its repairs.
+- Website can be opened from any operating system.
+
+Performance
+- Our website should have a quick response time of loading information and photos of parks and trails.
+- Our website should be accessed by using its URL.
+- Website should be accessible 24 Hours/day.
+
+Legal
+- Website should observe and follow copyright, privacy, state and federal laws of the United States.
+
+Security
+- User information should be protected and stored in a secure database.
+- Passwords should not be exposed in the system being hashed and salted.
+- To implement this, one way is to use https by obtaining an SSL certificate and have our application require https to operate. This way, any personal information will be encrypted and secure as it transfers to and from our server.
+
+Access Control
+- To ensure that accurate data is inputted, only users who are Explorers will be allowed to add and modify entries in our database. All other users will only have read access to the information in our application
