@@ -151,3 +151,4 @@ Security
 
 Access Control
 - To ensure that accurate data is inputted, only users who are Explorers will be allowed to add and modify entries in our database. All other users will only have read access to the information in our application
+
