@@ -31,3 +31,13 @@
 * Picture will have a Poster and Photo Data. Picture will be identified by Photo Data (key). Picture will display the Routes.
 * Boulder, Spot, and Traditional are all types of routes with their own unique attributes and relations
 * Both Spot and Traditional may have one or many Pitch entities 
+
+Park(name: Yosemite National Park, location: California)
+Rock(name: Southwest Face)
+Route(name: The nose, description: This is the description and how to do it, location:From El Capitan Meadow cross road, routeID: 89fugd0g9e0, rating: 4/5, grade:5.9)
+Trad(Gear Recommmendation: two or three sets of cams, number of pitches: 31)
+Pitch(Pitch length in feet:100 ft, pitch number: 2)
+User(email: email@email.com, name: Jon John, password: 89fs899h)
+Explorer(address: , phone number: )
+Comment(Text: “Hello world”, Author: Jon john, Route: , Date written: 5/5/5)
+
