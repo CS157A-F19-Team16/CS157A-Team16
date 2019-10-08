@@ -2,9 +2,9 @@
 <img src="https://imgur.com/go1h5A5.jpg" width=900 hspace="10">
 
 
-## Data Model Explanations
+# Data Model Explanations
 
-# Entity Sets:
+## Entity Sets:
 * User is an entity that we created since our application needs to keep track of different emails, passwords, and names for each account.
 * Comments is a weak entity set that relies on a user to exist. A comment consists of the date it was written and the text belonging to it
 * For each user, there are some that are also an Explorer who is a user but has some extra permissions such as being able to create routes and update information. However, with this responsibility, information such as phone number and address should be documented to ensure proper information. 
@@ -18,7 +18,7 @@
 * Picture is an entity that has an attribute of a picture of a route, the route its supposed to be a picture of, and the poster (who is supposed to be a user)
 
 
-# Relations:
+## Relations:
 * User will have an Email, a Full Name, and Password. User will be identified by their Email (key attribute).
 * User will be able to write Comments.
 * Comments will include Author, Text, Date Written and Route. Comments will be strictly identified by author, date written, and route.
