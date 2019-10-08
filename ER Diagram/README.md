@@ -32,6 +32,7 @@
 * Boulder, Spot, and Traditional are all types of routes with their own unique attributes and relations
 * Both Spot and Traditional may have one or many Pitch entities 
 
+## Tuples
 - Park(name: Yosemite National Park, location: California)
 - Rock(name: Southwest Face)
 - Route(name: The nose, description: This is the description and how to do it, location:From El Capitan Meadow cross road, routeID: 89fugd0g9e0, rating: 4/5, grade:5.9)
