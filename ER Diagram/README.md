@@ -1,5 +1,5 @@
 # ER Diagram for Outdoor Climb
-<img src="https://imgur.com/mr21bhS" width=900 hspace="10">
+<img src="https://i.imgur.com/mr21bhS.png" width=900 hspace="10">
 
 
 # Data Model Explanations
