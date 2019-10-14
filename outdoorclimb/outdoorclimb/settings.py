@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'outdoorsclimb',
+    'users',
     'rest_framework',
     'frontend'
 ]
