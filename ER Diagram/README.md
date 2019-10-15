@@ -54,13 +54,43 @@
 ## Park
 <img src="https://imgur.com/EM1p1EI.png" width=900 hspace="10">
 
-## Rock combined with relation to park:
+## Rock combined with relation to park
 <img src="https://imgur.com/mKvvKWH.png" width=900 hspace="10">
 
-## RouteinRock relationship:
+## RouteinRock relationship
 <img src="https://imgur.com/4pAQ8UR.png" width=900 hspace="10">
 
 ## Route
 <img src="https://imgur.com/70xBsBl.png" width=900 hspace="10">
 <img src="https://imgur.com/uhpBmVK.png" width=900 hspace="10">
+
+## Trad with relation to the route id via isa inheritance
+<img src="https://imgur.com/gGaDMCo.png" width=900 hspace="10">
+
+## Sport with relation to route id via isa inheritance
+<img src="https://imgur.com/RUEyL1T.png" width=900 hspace="10">
+
+## Boulder with relation to route id via isa inheritance
+<img src="https://imgur.com/sSV7nUR.png" width=900 hspace="10">
+
+## Pitch combined with its relation of it belongs to by RouteID
+<img src="https://imgur.com/HEsiodQ.png" width=900 hspace="10">
+
+## User
+<img src="https://imgur.com/CunlLQg.png" width=900 hspace="10">
+
+## Explorer
+<img src="https://imgur.com/RBjuDS3.png" width=900 hspace="10">
+
+## Admin
+<img src="https://imgur.com/pNMaZ6h.png" width=900 hspace="10">
+
+## Comment
+<img src="https://imgur.com/Y1RuVtK.png" width=900 hspace="10">
+
+## Writer
+<img src="https://imgur.com/BhsWWYI.png" width=900 hspace="10">
+
+## Picture
+<img src="https://imgur.com/Q7JyEsy.png" width=900 hspace="10">
 
