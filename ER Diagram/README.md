@@ -80,7 +80,7 @@
 <img src="https://imgur.com/CunlLQg.png" width=500 hspace="10">
 
 ## Explorer
-<img src="https://imgur.com/RBjuDS3.png" width=500 hspace="10">
+<img src="https://imgur.com/RBjuDS3.png" width=800 hspace="10">
 
 ## Admin
 <img src="https://imgur.com/pNMaZ6h.png" width=500 hspace="10">
