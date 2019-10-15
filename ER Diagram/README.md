@@ -52,7 +52,7 @@
 # Tables:
 
 ## Park
-<img src="https://imgur.com/EM1p1EI.png" width=900 hspace="10">
+<img src="https://imgur.com/EM1p1EI.png" width=500 hspace="10">
 
 ## Rock combined with relation to park
 <img src="https://imgur.com/mKvvKWH.png" width=500 hspace="10">
