@@ -31,6 +31,13 @@
 * Picture will have a Poster and Photo Data. Picture will be identified by Photo Data (key). Picture will display the Routes.
 * Boulder, Spot, and Traditional are all types of routes with their own unique attributes and relations
 * Both Spot and Traditional may have one or many Pitch entities 
+* Admin displays that an explorer is the admin of a route and a route has to have at least one explorer
+* Writer a user will be able to write a comment and a comment will be written by the user. The comment must map to at most one user. The User may right many comments.
+* ParkHasRock rock is a weak entity so it is only identified by the park name.
+* RouteHasRock route must map to one rock
+* PictureDisplay picture is displayed by the route. The picture is displayed and must be displayed by one route. One route can have many pictures.
+* Belongsin the pitch must belong to one sport or traditional entity.
+
 
 ## Tuples
 - Park(name: Yosemite National Park, location: California)
