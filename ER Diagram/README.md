@@ -55,7 +55,7 @@
 <img src="https://imgur.com/EM1p1EI.png" width=900 hspace="10">
 
 ## Rock combined with relation to park
-<img src="https://imgur.com/mKvvKWH.png" width=900 hspace="10">
+<img src="https://imgur.com/mKvvKWH.png" width=500 hspace="10">
 
 ## RouteinRock relationship
 <img src="https://imgur.com/4pAQ8UR.png" width=900 hspace="10">
@@ -83,7 +83,7 @@
 <img src="https://imgur.com/RBjuDS3.png" width=900 hspace="10">
 
 ## Admin
-<img src="https://imgur.com/pNMaZ6h.png" width=900 hspace="10">
+<img src="https://imgur.com/pNMaZ6h.png" width=500 hspace="10">
 
 ## Comment
 <img src="https://imgur.com/Y1RuVtK.png" width=900 hspace="10">
