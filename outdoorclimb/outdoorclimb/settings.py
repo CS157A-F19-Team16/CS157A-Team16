@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'rest_framework',
-    'frontend'
+    'frontend',
+    'routesapp'
 ]
 
 MIDDLEWARE = [
@@ -80,10 +81,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'outdoor_climb_database',
-        'USER' : 'root',
-        'PASSWORD' : 'root',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
-        'PORT' : '3306',
+        'PORT': '3306',
     }
 }
 
