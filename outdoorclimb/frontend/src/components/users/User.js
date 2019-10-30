@@ -21,7 +21,6 @@ export class Users extends Component {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Name</th>
               <th>Email</th>
               <th />
@@ -29,8 +28,7 @@ export class Users extends Component {
           </thead>
           <tbody>
             {this.props.users.map(user => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
+              <tr key={user.email}>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>

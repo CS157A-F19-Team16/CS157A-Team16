@@ -27,7 +27,7 @@ export class Form extends Component {
   };
 
   render() {
-    const { name, email, message } = this.state;
+    const { name, email } = this.state;
     return (
       <div className="card card-ody mt-4 mt-4">
         <h2>Add user</h2>
