@@ -11,3 +11,5 @@ export const LOGOUT_SUCCESS = " LOGOUT_SUCCESS";
 export const REGISTER_SUCCESS = " REGISTER_SUCCESS";
 export const REGISTER_FAIL = " REGISTER_FAIL";
 export const CREATE_MESSAGE = "CREATE_MESSAGE";
+export const GET_ROUTES = "GET_ROUTES";
+export const GET_PARKS = "GET_PARKS";

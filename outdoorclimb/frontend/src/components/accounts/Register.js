@@ -29,8 +29,8 @@ export class Register extends Component {
         password,
         email
       };
+      this.props.register(newUser);
     }
-    this.props.register(newUser);
   };
 
   onChange = e =>

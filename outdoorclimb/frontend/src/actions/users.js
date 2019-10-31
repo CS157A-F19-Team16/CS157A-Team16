@@ -15,7 +15,6 @@ export const getUsers = () => (dispatch, getState) => {
     .catch(err => console.log(err));
 };
 
-// Delete Lead
 export const deleteUser = id => (dispatch, getState) => {
   axios
     .delete(`/api/users/${id}/`, tokenConfig(getState))
@@ -28,7 +27,6 @@ export const deleteUser = id => (dispatch, getState) => {
     .catch(err => console.log(err));
 };
 
-// Delete Lead
 export const addUser = user => (dispatch, getState) => {
   axios
     .post("/api/users/", user, tokenConfig(getState))

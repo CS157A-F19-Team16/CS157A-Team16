@@ -13,7 +13,22 @@ export class Header extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
-    const authLinks = (
+    const userLinks = (
+      <ul className="navbar-nav mc-auto">
+        <li className="navitem">
+          <Link to="/routesbrowse" className="nav-link">
+            Browse Routes
+          </Link>
+        </li>
+        <li className="navitem">
+          <Link to="/parksbrowse" className="nav-link">
+            Browse Parks
+          </Link>
+        </li>
+      </ul>
+    );
+
+    const logoutLink = (
       <ul className="navbar-nav ml-auto">
         <span className="navbar-text mr-3">
           <strong>{user ? `Welcome ${user.username}` : ``}</strong>
@@ -63,7 +78,9 @@ export class Header extends Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {isAuthenticated ? authLinks : guestLinks}
+            {userLinks}
+            {isAuthenticated ? userLinks : null}
+            {isAuthenticated ? logoutLink : guestLinks}
           </div>
         </div>
       </nav>

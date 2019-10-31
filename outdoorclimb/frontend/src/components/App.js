@@ -9,11 +9,14 @@ import {
 
 import Header from "./layout/Header";
 import Dashboard from "./users/Dashboard";
+import RouteBrowse from "./routes/RoutesBrowser";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
+import ParksBrowse from "./parks/ParksBrowse";
+import RoutesBrowser from "./routes/RoutesBrowser";
 import PrivateRoute from "./common/PrivateRoute";
 
 import { Provider } from "react-redux";
@@ -42,6 +45,12 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
+                  <Route
+                    exact
+                    path="/routesbrowser"
+                    component={RoutesBrowser}
+                  />
+                  <Route exact path="/parksbrowse" component={ParksBrowse} />
                   <PrivateRoute exact path="/" component={Dashboard} />
                 </Switch>
               </div>
