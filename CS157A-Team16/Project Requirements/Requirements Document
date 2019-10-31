@@ -1,0 +1,154 @@
+Project Requirement Document:
+https://docs.google.com/document/d/1vPqTJWCk_NzPclOwIa9mZtSNToKM9L7WtF5sNdQmoh0/edit?usp=sharing
+
+Contribution:
+  George: Non-functional Issues + Editing
+  Jeffery: Project Overview + System Environment Diagram
+  Stan: Functional Requirements methods
+
+Project Overview
+
+    This application will highlight important details of outdoor rock climbing routes done and shared by other users at 
+  various locations. A park will have multiple rock structures to climb and each one has multiple routes, and routes will have 
+  details on how to climb it as well as the difficulty. This information will be stored in the database application while keeping an 
+  organized hierarchy structure. 
+  
+    Stakeholders in this project are the users and the developers. Users include outdoor climbers who can research parks and rock climbing 
+  locations to find the best routes for them. Verified users with the title explorer can add routes to the database. With the details of
+  difficulty grade, sending tips, and gear setting logistics, users can prepare and collect target routes for a trip.
+  
+    The application is important because having details of routes before outdoor climbing is critical for preparation. For an optimal 
+  climbing trip, one should have information about the routes of their destination and have details on the routes they want to climb 
+  for safety, time, and proper gear preparation. Comments are also implemented on routes to share feedback and get information from 
+  other users.
+
+System Environment
+
+    This application will follow a three tier architecture. The web client layer will be accessed through personal hardware devices. 
+  The client will written in HTML, CSS, and Javascript, which may utilize some front-end frameworks such as React, Bulma, or the 
+  Material UI. These tools will help create a more seamless UI interface.
+    The web server will be managed through Django. Django is based in Python and will be driven with a MySQL database containing the client data.
+
+Hardware and Software
+  - Apache Web Server
+RDBMS
+  - MySQL Community Server
+Languages
+  - Python 3
+  - JavaScriptXML
+  - HTML
+  - CSS
+  - SQL
+  
+Functional Requirements
+
+There will be two kinds of users: Explorers and Climbers.
+  -Explorers must be screened for experience, reliability, and a background check. 
+  -Climbers can be anyone.
+  -User in this document will refer to both Climber and Explorer
+  
+  The application newly deployed should have a database with the information of frequented routes.
+  
+  The role of the Explorer User is to be able to add new routes to the database. Explorer User will be able to add a new route through:
+      1.Selecting a location or adding a new location
+      2.Showing how to reach the rock structure on a trail map of the location
+      3.Showing how the route is climbed on the rock structure
+      4.Classifying what the type of climb the route is     
+      5.Writing important notes and instructions on how to climb the route
+    
+    The role of the Climber User is to be able to find information, discover climbing routes and make reviews on certain routes.
+	 
+   The functionality and features this application provides is a query system. The query system will allow users to search for 
+  rock climbing areas by name, location, or type of climb and display the possible areas through an organized table. For each of 
+  the areas there should be a way to view the specific information such as climbing routes and any notes. Furthermore, Explorers 
+  should have the ability to add important details on the routes and have those suggestions be saved into the database. A database 
+  will of course be implemented to ensure that the user can actually access information.
+
+Functions:
+Login to a Climber or Explorer account:
+  -Type in user name
+  -Type in password
+
+Create a new Climber:
+-Create a user name
+-Create Full Name
+-Create and verify a valid password
+
+Apply to be an Explorer:
+-Fill out an application
+-Fill out Full Name
+-Fill out email
+-Create and verify a valid password
+-Fill out Phone Number
+-Fill out Area you live in
+-Submit application (Application should be verified and more detailed screening and application after)
+
+Users can search for specific routes:
+-Users can search for a specific route via filters in location or number of pitches or tpye of climbing or difficulty or name. 
+These will help specify with the filters
+-The application will attempt to retrieve the data from the database based on these filters. If the location or park is not found, 
+the application will tell the user that there is no information available based on these filters
+
+Users can browse different cliffs and boulders in a park or region:
+-User should be able to see a list of different cliffs or boulders (rock structure) inside a selected park or region
+-Rock structures displayed here can be clicked for further details
+
+Users can select different climbing routes in a cliff or boulder:
+-User should be able to see routes for climbing
+-The path of the route will be highlighted
+-The difficulty grade should be present
+-Specifics on how to set up routes will be available
+-The application should allow users to select a climbing site, and then display another list of climbing routes. For each route, 
+the route, path, set up and difficulty level will be displayed
+
+Users can sort climbing routes and locations
+-User should be able to change the order of each list that is displayed to them from a selection menu 
+-The application will provide a way to sort by varying parameters that each route and locations possess such as degree of difficulty, 
+average time to climb, and number of available routes
+
+Explorer can add routes they have discovered that are not previously in the database:
+-Will input the park location, a rock structure, a route or boulder
+-Details on how to set up the route is written here
+-The route can be named.
+-The application will allow for explorer to add their own entries into the database with a fill in form
+-Explorer can comment as the explorer on the comments of the route
+
+Climbers can comment on a route page
+
+Non-functional Issues
+
+Graphic User Interfaces:
+- To create Graphical User Interfaces, Adobe XD will be used to bring designs and prototypes. Wireframes for the web application can be created in XD as well.
+For the actual design of the application, the initial start screen in the web browser will contain a search bar in the middle of the screen and on the right side of that bar will contain a drop down menu for selecting what parameter to search by: location or name of park. At the top right of the page, there will be a login and signup button where users can login to their accounts, and if the sign up, they will be redirected to a sign up page where users will have to fill out information for their account. After a user searches for something on the start screen, the application will query for that information and display a new screen where the search bar is located near the top of the browser page and the results underneath it. Furthermore, there will be another drop down menu next to a ‘sort by’ text that allows users to select how to sort the results. The actual results will be displayed in boxes that extend down with each one containing the relevant information about each entry.    
+
+Reliability
+- Our web application must have robustness, meaning it should tolerate a lot of users accessing at the same time without causing any problems. 
+Our website should not cause any harm to the user
+
+Usability
+- Users should be able to SELECT and search for a list of selected parks.
+- Search bar should work by representing parks in the list.
+- Users should be able to add their own found paths from a certain park.
+- Users should be able to choose a climbing path by specified difficulty grade.
+
+Supportability
+- Extending the website should be easy.
+- System should be maintained without spending too much money and time on its repairs.
+- Website can be opened from any operating system.
+
+Performance
+- Our website should have a quick response time of loading information and photos of parks and trails.
+- Our website should be accessed by using its URL.
+- Website should be accessible 24 Hours/day.
+
+Legal
+- Website should observe and follow copyright, privacy, state and federal laws of the United States.
+
+Security
+- User information should be protected and stored in a secure database.
+- Passwords should not be exposed in the system being hashed and salted.
+- To implement this, one way is to use https by obtaining an SSL certificate and have our application require https to operate. This way, any personal information will be encrypted and secure as it transfers to and from our server.
+
+Access Control
+- To ensure that accurate data is inputted, only users who are Explorers will be allowed to add and modify entries in our database. All other users will only have read access to the information in our application
+

@@ -1,0 +1,31 @@
+{
+  "name": "CS157A-Team16",
+  "version": "1.0.0",
+  "description": "## Project for CS157A",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
+  },
+  "scripts": {
+    "dev": "webpack --mode development --watch ./outdoorclimb/frontend/src/index.js --output ./outdoorclimb/frontend/static/frontend/main.js",
+    "build": "webpack --mode production ./outdoorclimb/frontend/src/index.js --output ./outdoorclimb/frontend/static/frontend/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CS157A-F19-Team16/CS157A-Team16.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CS157A-F19-Team16/CS157A-Team16/issues"
+  },
+  "homepage": "https://github.com/CS157A-F19-Team16/CS157A-Team16#readme"
+}
