@@ -3,7 +3,7 @@ import { GET_PARKS } from "./types";
 
 export const getParks = () => dispatch => {
   axios
-    .get("/api/parks/")
+    .get("/routesapp/parks")
     .then(res => {
       dispatch({
         type: GET_PARKS,
