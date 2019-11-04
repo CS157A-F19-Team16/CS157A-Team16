@@ -78,7 +78,6 @@ export class Header extends Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {userLinks}
             {isAuthenticated ? userLinks : null}
             {isAuthenticated ? logoutLink : guestLinks}
           </div>
