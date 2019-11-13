@@ -51,7 +51,7 @@ class App extends Component {
                     component={RoutesBrowser}
                   />
                   <Route exact path="/parksbrowse" component={ParksBrowse} />
-                  <PrivateRoute exact path="/" component={Dashboard} />
+                  {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
                 </Switch>
               </div>
             </Fragment>
