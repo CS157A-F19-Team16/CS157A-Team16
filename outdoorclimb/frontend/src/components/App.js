@@ -18,6 +18,7 @@ import Register from "./accounts/Register";
 import ParksBrowse from "./parks/ParksBrowse";
 import RoutesBrowser from "./routes/RoutesBrowser";
 import PrivateRoute from "./common/PrivateRoute";
+import AddRoute from "./adders/AddRoute";
 
 import { Provider } from "react-redux";
 import store from "../store";
@@ -43,6 +44,7 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
+                  <Route exact path="/addroute" component={AddRoute} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                   <Route
