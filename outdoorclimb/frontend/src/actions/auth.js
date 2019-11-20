@@ -25,6 +25,7 @@ export const loadUser = () => (dispatch, getState) => {
       });
     })
     .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR
       });
@@ -55,6 +56,81 @@ export const login = (username, password) => dispatch => {
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: LOGIN_FAIL
+      });
+    });
+};
+
+export const explorerLogin = (username, password) => dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({
+    username,
+    password
+  });
+
+  axios
+    .post("/api/auth/explorerLogin", body, config)
+    .then(res => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: LOGIN_FAIL
+      });
+    });
+};
+
+export const explorerRegister = (
+  username,
+  email,
+  address,
+  city,
+  state,
+  zip,
+  phone,
+  password
+) => dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const fulladdress = null;
+  if (address != "" && city != "" && state != "" && zip != "") {
+    fulladdress = address + "," + city + "," + state + "," + zip;
+  } else {
+    return;
+  }
+
+  const body = JSON.stringify({
+    username,
+    email,
+    fulladdress,
+    phone,
+    password
+  });
+
+  axios
+    .post("/users/explorerRegister", body, config)
+    .then(res => {
+      dispatch({
+        type: EXPLORER_REGISTER_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: EXPLORER_REGISTER_FAIL
       });
     });
 };

@@ -23,6 +23,8 @@ import AddRoute from "./adders/AddRoute";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
+import ExplorerLogin from "./accounts/ExplorerLogin";
+import ExplorerRegister from "./accounts/ExplorerRegister";
 
 const alertOptions = {
   timeout: 3000,
@@ -49,11 +51,21 @@ class App extends Component {
                   <Route exact path="/login" component={Login} />
                   <Route
                     exact
+                    path="/explorerlogin"
+                    component={ExplorerLogin}
+                  />
+                  <Route
+                    exact
+                    path="/explorerregister"
+                    component={ExplorerRegister}
+                  />
+                  <Route
+                    exact
                     path="/routesbrowser"
                     component={RoutesBrowser}
                   />
                   <Route exact path="/parksbrowse" component={ParksBrowse} />
-                  {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
+                  <PrivateRoute exact path="/" component={Dashboard} />
                 </Switch>
               </div>
             </Fragment>
