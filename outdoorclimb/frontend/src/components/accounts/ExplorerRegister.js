@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { register, explorerRegister } from "../../actions/auth";
+import { returnErrors, createMessage } from "../../actions/messages";
 
-export default class ExplorerRegister extends Component {
+export class ExplorerRegister extends Component {
   state = {
     username: "",
     email: "",
@@ -12,6 +16,13 @@ export default class ExplorerRegister extends Component {
     phone: "",
     password: "",
     password2: ""
+  };
+
+  static propTypes = {
+    register: PropTypes.func.isRequired,
+    explorerRegister: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+    isExplorerAuthenticated: PropTypes.bool
   };
 
   states = [
@@ -87,16 +98,40 @@ export default class ExplorerRegister extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { username, email, password, password2 } = this.state;
+    const {
+      username,
+      email,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      password,
+      password2
+    } = this.state;
     if (password != password2) {
       this.props.createMessage({ passwordNotMatch: "Passwords do not match" });
     } else {
+      //Add the user to the user table
+      //Authentication is already established here
       const newUser = {
         username,
         password,
         email
       };
+      const newExplorerUser = {
+        username,
+        email,
+        address,
+        city,
+        state,
+        zip,
+        phone,
+        password
+      };
       this.props.register(newUser);
+      //Add the user to the explorer table
+      // this.props.explorerRegister(newExplorerUser);
     }
   };
 
@@ -239,3 +274,14 @@ export default class ExplorerRegister extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  isExplorerAuthenticated: state.auth.isExplorerAuthenticated
+});
+
+export default connect(mapStateToProps, {
+  register,
+  explorerRegister,
+  createMessage
+})(ExplorerRegister);

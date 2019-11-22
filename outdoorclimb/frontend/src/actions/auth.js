@@ -108,9 +108,11 @@ export const explorerRegister = (
   if (address != "" && city != "" && state != "" && zip != "") {
     fulladdress = address + "," + city + "," + state + "," + zip;
   } else {
+    //Dispatch an alert
     return;
   }
 
+  //Body that will be sent to the explorer table
   const body = JSON.stringify({
     username,
     email,

@@ -14,7 +14,7 @@ class User(models.Model):
 class Explorer(models.Model):
     email = models.EmailField(max_length=100, unique=True, primary_key=True)
     address = models.CharField(max_length=100)
-    phone_number = models.IntegerField()
+    phone_number = models.CharField(max_length=100)
 
 
 class Comment(models.Model):
