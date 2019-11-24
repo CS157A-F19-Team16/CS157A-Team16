@@ -23,25 +23,34 @@ export class RoutesBrowser extends Component {
   render() {
     console.log("Trying");
     return (
-      <h3>{parkkey}</h3>
-      // <div className="card-deck mt-3">
-      //   {this.props.routes.map(route => (
-      //     <div className="col-sm-6 mt-3">
-      //       <div className="card">
-      //         <div className="card-body">
-      //           <h5 className="card-title">Special title treatment</h5>
-      //           <p className="card-text">
-      //             With supporting text below as a natural lead-in to additional
-      //             content.
-      //           </p>
-      //           <a href="#" className="btn btn-primary">
-      //             Go somewhere
-      //           </a>
-      //         </div>
-      //       </div>
-      //     </div>
-      //   ))}
-      // </div>
+      <Fragment>
+        <div className="card-deck mt-3">
+          {this.props.routes.map(route => (
+            <div key={route.id} className="col-sm-6 mt-3">
+              <div className="card">
+                <Link
+                  to={{
+                    pathname: "/routesviewer",
+                    state: { routekey: route.id}
+                  }}
+                  className="nav-link"
+                >
+                  <img
+                    className="card-img-top"
+                    src={
+                      "https://boxoffice.hotdocs.ca/images/user/bc_2338/Dawn-Wall1.jpg"
+                    }
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{route.name}</h5>
+                    <p className="card-text">{route.park_name}</p>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Fragment>
     );
   }
 }

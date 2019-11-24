@@ -19,6 +19,7 @@ import ParksBrowse from "./parks/ParksBrowse";
 import RoutesBrowser from "./routes/RoutesBrowser";
 import PrivateRoute from "./common/PrivateRoute";
 import AddRoute from "./adders/AddRoute";
+import RoutesViewer from "./routes/RoutesViewer";
 
 import { Provider } from "react-redux";
 import store from "../store";
@@ -46,11 +47,9 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-<<<<<<< HEAD
-=======
+                  <Route exact path="/routesviewer" component={RoutesViewer} />
                   <Route exact path="/addroute" component={AddRoute} />
                   <Route exact path="/register" component={Register} />
->>>>>>> origin/exploreradder
                   <Route exact path="/login" component={Login} />
                   <Route
                     exact
