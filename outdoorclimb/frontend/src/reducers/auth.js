@@ -6,7 +6,9 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  EXPLORER_REGISTER_SUCCESS,
+  EXPLORER_REGISTER_FAIL
 } from "../actions/types";
 
 const initialState = {
@@ -29,6 +31,11 @@ export default function(state = initialState, action) {
         isAuthenticated: true,
         isLoading: false,
         user: action.payload
+      };
+    case EXPLORER_REGISTER_SUCCESS:
+      return {
+        ...state,
+        isExplorerAuthenticated: true
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:

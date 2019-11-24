@@ -4,15 +4,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../actions/auth";
 
-export class Login extends Component {
+export default class ExplorerLogin extends Component {
   state = {
     username: "",
     password: ""
-  };
-
-  static propTypes = {
-    login: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool
   };
 
   onSubmit = e => {
@@ -26,18 +21,18 @@ export class Login extends Component {
     });
 
   render() {
-    // if (this.props.isAuthenticated) {
-    //   return <Redirect to="/" />;
-    // }
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
     const { username, password } = this.state;
     return (
       <div>
         <div className="pt-8">
-          <Link to="/explorerlogin">Explorer? Over Here</Link>
+          <Link to="/login">Normal Climber? Over Here</Link>
         </div>
         <div className="col-md-6 m-auto">
           <div className="card card-body mt-5">
-            <h2 className="text-center">Login</h2>
+            <h2 className="text-center">Explorer Login</h2>
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <label>Username</label>
@@ -65,7 +60,8 @@ export class Login extends Component {
                 </button>
               </div>
               <p>
-                Don't have an account? <Link to="/register">Register</Link>
+                Don't have an account?{" "}
+                <Link to="/explorerregister">Register</Link>
               </p>
             </form>
           </div>
@@ -74,9 +70,3 @@ export class Login extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, { login })(Login);
