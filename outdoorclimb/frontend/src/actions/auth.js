@@ -65,9 +65,9 @@ export const login = (username, password) => dispatch => {
 };
 
 export const explorerLogin = () => dispatch => {
+  console.log("Trying to dispatch");
   dispatch({
-    type: EXPLORER_LOGIN_SUCCESS,
-    payload: res.data
+    type: EXPLORER_LOGIN_SUCCESS
   });
 };
 

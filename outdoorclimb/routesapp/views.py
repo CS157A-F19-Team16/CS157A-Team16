@@ -1,9 +1,11 @@
 from django.shortcuts import render
-
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 from django.http import HttpResponse
 from .models import Parks
 from django.http import JsonResponse
+from django.db import connection
+import json
 
 
 def index(request):
@@ -29,3 +31,16 @@ def routes_park_detail(request, pk):
         print(type(row))
         data.append({'name': row.name, 'location': row.location})
     return JsonResponse(data, safe=False)
+
+
+@csrf_exempt
+def add_park(request):
+    if request.method == 'POST':
+        request_body = request.body
+        json_string = request_body.decode('utf8')
+        data = json.loads(json_string)
+        query = 'INSERT INTO routesapp_parks VALUES(\'' + \
+            data['parkName'] + '\',\'' + data['location'] + '\');'
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+        return JsonResponse(data, safe=False)

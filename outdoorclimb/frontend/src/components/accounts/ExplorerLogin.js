@@ -20,15 +20,19 @@ export class ExplorerLogin extends Component {
   onSubmit = e => {
     e.preventDefault();
     this.props.login(this.state.username, this.state.password);
-    if (this.props.isAuthenticated) {
-      this.props.explorerLogin();
-    }
   };
 
   onChange = e =>
     this.setState({
       [e.target.name]: e.target.value
     });
+
+  componentWillReceiveProps(nextProps) {
+    const newValue = nextProps.isAuthenticated;
+    if (newValue !== this.props.isAuthenticated && newValue == true) {
+      this.props.explorerLogin();
+    }
+  }
 
   render() {
     if (this.props.isExplorerAuthenticated) {

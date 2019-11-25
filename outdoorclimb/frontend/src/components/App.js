@@ -19,7 +19,7 @@ import ParksBrowse from "./parks/ParksBrowse";
 import RoutesBrowser from "./routes/RoutesBrowser";
 import PrivateRoute from "./common/PrivateRoute";
 import AddRoute from "./adders/AddRoute";
-
+import AddPark from "./adders/AddPark";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
@@ -49,6 +49,7 @@ class App extends Component {
                   <Route exact path="/addroute" component={AddRoute} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
+                  <Route exact path="/addpark" component={AddPark} />
                   <Route
                     exact
                     path="/explorerlogin"

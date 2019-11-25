@@ -15,6 +15,7 @@ import {
 
 const initialState = {
   token: localStorage.getItem("token"),
+  isExplorerAuthenticated: null,
   isAuthenticated: null,
   isLoading: false,
   user: null
@@ -61,6 +62,7 @@ export default function(state = initialState, action) {
     case LOGOUT_SUCCESS:
     case AUTH_ERROR:
     case LOGIN_FAIL:
+    case EXPLORER_LOGIN_FAIL:
     case REGISTER_FAIL:
       localStorage.removeItem("token");
       return {
