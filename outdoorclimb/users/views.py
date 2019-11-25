@@ -16,11 +16,10 @@ def register_explorer(request):
         request_body = request.body
         json_string = request_body.decode('utf8')
         data = json.loads(json_string)
+        print(data)
         query = 'INSERT INTO users_explorer VALUES(\'' + \
-            data['email'] + '\',\'' + data['address'] + \
-                '\',\'' + data['phone'] + '\');'
-
-        explorer = Explorer.objects.raw(
-            query
-        )
+            data['email'] + '\',\'' + data['fulladdress'] + \
+                '\',\'' + str(data['phone']) + '\');'
+        with connection.cursor() as cursor:
+            cursor.execute(query)
         return JsonResponse(data, safe=False)

@@ -8,7 +8,11 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  EXPLORER_REGISTER_SUCCESS,
+  EXPLORER_REGISTER_FAIL,
+  EXPLORER_LOGIN_SUCCESS,
+  EXPLORER_LOGIN_FAIL
 } from "./types";
 
 export const loadUser = () => (dispatch, getState) => {
@@ -60,43 +64,20 @@ export const login = (username, password) => dispatch => {
     });
 };
 
-export const explorerLogin = (username, password) => dispatch => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-
-  const body = JSON.stringify({
-    username,
-    password
+export const explorerLogin = () => dispatch => {
+  dispatch({
+    type: EXPLORER_LOGIN_SUCCESS,
+    payload: res.data
   });
-
-  axios
-    .post("/api/auth/explorerLogin", body, config)
-    .then(res => {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-      });
-    })
-    .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: LOGIN_FAIL
-      });
-    });
 };
 
 export const explorerRegister = (
-  username,
   email,
   address,
   city,
   state,
   zip,
-  phone,
-  password
+  phone
 ) => dispatch => {
   const config = {
     headers: {
@@ -104,25 +85,17 @@ export const explorerRegister = (
     }
   };
 
-  const fulladdress = null;
-  if (address != "" && city != "" && state != "" && zip != "") {
-    fulladdress = address + "," + city + "," + state + "," + zip;
-  } else {
-    //Dispatch an alert
-    return;
-  }
+  let fulladdress = address + "," + city + "," + state + "," + zip;
 
   //Body that will be sent to the explorer table
   const body = JSON.stringify({
-    username,
     email,
     fulladdress,
-    phone,
-    password
+    phone
   });
 
   axios
-    .post("/users/explorerRegister", body, config)
+    .post("/users/explorerRegister/", body, config)
     .then(res => {
       dispatch({
         type: EXPLORER_REGISTER_SUCCESS,
@@ -130,6 +103,7 @@ export const explorerRegister = (
       });
     })
     .catch(err => {
+      console.log(err);
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: EXPLORER_REGISTER_FAIL
@@ -137,7 +111,7 @@ export const explorerRegister = (
     });
 };
 
-export const register = ({ username, password, email }) => dispatch => {
+export const register = (username, password, email) => dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -149,6 +123,8 @@ export const register = ({ username, password, email }) => dispatch => {
     email,
     password
   });
+
+  console.log(body);
 
   axios
     .post("/api/auth/register", body, config)

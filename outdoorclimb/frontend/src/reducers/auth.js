@@ -8,7 +8,9 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   EXPLORER_REGISTER_SUCCESS,
-  EXPLORER_REGISTER_FAIL
+  EXPLORER_REGISTER_FAIL,
+  EXPLORER_LOGIN_FAIL,
+  EXPLORER_LOGIN_SUCCESS
 } from "../actions/types";
 
 const initialState = {
@@ -32,10 +34,20 @@ export default function(state = initialState, action) {
         isLoading: false,
         user: action.payload
       };
+    case EXPLORER_LOGIN_SUCCESS:
     case EXPLORER_REGISTER_SUCCESS:
       return {
         ...state,
         isExplorerAuthenticated: true
+      };
+    case EXPLORER_REGISTER_FAIL:
+      localStorage.removeItem("token");
+      return {
+        isExplorerAuthenticated: false,
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:

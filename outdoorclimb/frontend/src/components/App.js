@@ -56,7 +56,7 @@ class App extends Component {
                   />
                   <Route
                     exact
-                    path="/explorerregister"
+                    path="/explorerregister/"
                     component={ExplorerRegister}
                   />
                   <Route
