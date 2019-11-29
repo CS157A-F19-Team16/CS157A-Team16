@@ -44,7 +44,6 @@ export const addRoute = (
       });
     })
     .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: ADD_ROUTE_FAIL
       });

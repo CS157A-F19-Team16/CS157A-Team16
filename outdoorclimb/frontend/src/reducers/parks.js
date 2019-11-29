@@ -19,12 +19,9 @@ export default function(state = initialState, action) {
     case ADD_PARK_SUCCESS:
       return {
         ...state,
-        parks: [...state.users, action.payload]
+        parks: [...state.parks, action.payload]
       };
     default:
-      dispatch({
-        type: ADD_ROUTE_FAIL
-      });
       return state;
   }
 }

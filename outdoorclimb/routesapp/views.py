@@ -53,7 +53,6 @@ def add_route(request):
         request_body = request.body
         json_string = request_body.decode('utf8')
         data = json.loads(json_string)
-        print(json_string)
         blank = ''
         route_id = create_route_id(
             data['routeName'], data['parkName'])
@@ -61,12 +60,14 @@ def add_route(request):
             cursor.execute('INSERT INTO routesapp_routes VALUES(%s, %s, %s, %s, %s, %s, %s, %s);', [
                            route_id, data['routeName'], data['parkName'], blank, data['routeDescription'], data['grade'], -1.0, data['routeProfile']])
             route_type = data['routeType']
+            print(route_type)
             if route_type == 'bouldering':
                 cursor.execute(add_boulder(route_id))
             elif route_type == 'traditional':
                 cursor.execute(add_traditional(route_id))
             elif route_type == 'sport':
-                cursor.execute(add_sport(route_id))
+                cursor.execute('INSERT INTO routesapp_sport_routes VALUES(\'' +
+                               route_id + '\',\'' + blank + '\',%s);', [0])
         return JsonResponse(data, safe=False)
 
 
@@ -82,7 +83,7 @@ def add_traditional(route_id):
 
 def add_sport(route_id):
     blank = ''
-    return 'INSERT INTO routesapp_sport_routes VALUES(\'' + route_id + '\',\'' + blank + '\',\'' + blank + '\');'
+    return 'INSERT INTO routesapp_sport_routes VALUES(\'' + route_id + '\',\'' + blank + '\',' + 0 + ');'
 
 
 def create_route_id(route_name, park_name):

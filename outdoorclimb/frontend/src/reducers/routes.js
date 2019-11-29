@@ -11,9 +11,8 @@ export default function(state = initialState, action) {
     case ADD_ROUTE_SUCCESS:
       //Return as state
       return {
-        //include anything in the state
         ...state,
-        routes: [...state.users, action.payload]
+        routes: [...state.routes, action.payload]
       };
     default:
       return state;

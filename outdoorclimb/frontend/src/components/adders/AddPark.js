@@ -21,7 +21,7 @@ export class AddPark extends Component {
     });
 
   onSubmit = e => {
-    // e.preventDefault();
+    e.preventDefault();
     const { parkName, location } = this.state;
     if (parkName != "" && location != "") {
       this.props.addPark(parkName, location);
@@ -41,7 +41,7 @@ export class AddPark extends Component {
     const { parkName, location } = this.state;
     return (
       <div>
-        <form className="py-5">
+        <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <div className="form-row">
               <div className="input-group input-group-lg">
@@ -108,12 +108,7 @@ export class AddPark extends Component {
               </div>
             </div>
             <div className="form-group pt-5">
-              <button
-                className="btn btn-primary"
-                onClick={this.props.addPark.bind(this, parkName, location)}
-              >
-                Add Park
-              </button>
+              <button className="btn btn-primary">Add Park</button>
             </div>
           </div>
         </form>

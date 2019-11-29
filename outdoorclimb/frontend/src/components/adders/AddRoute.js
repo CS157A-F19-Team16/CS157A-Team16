@@ -26,10 +26,6 @@ export class AddRoute extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    grade = gradeNumber;
-    if (gradeLetter != "") {
-      grade += gradeLetter;
-    }
     const {
       parkName,
       routeType,
@@ -38,7 +34,12 @@ export class AddRoute extends Component {
       routeName,
       routeDescription
     } = this.state;
+    let grade = gradeNumber;
+    if (gradeLetter != "") {
+      grade += gradeLetter;
+    }
     if (parkName != "" && routeName != "") {
+      console.log(routeType);
       this.props.addRoute(
         parkName,
         routeType,
@@ -63,9 +64,14 @@ export class AddRoute extends Component {
       [e.target.name]: e.target.value
     });
 
-  handleChange(selectedOption) {
-    this.setState({ routeType: selectedOption.target.value });
-  }
+  routeTypeChange = e => {
+    var options = e.target.options;
+    for (var i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        this.setState({ routeType: options[i].value });
+      }
+    }
+  };
 
   createRouteGrades() {
     let items = [];
@@ -171,123 +177,104 @@ export class AddRoute extends Component {
     return (
       <div>
         <form onSubmit={this.onSubmit} className="py-5">
-          <div className="container">
-            <div className="row">
+          <div className="form-group">
+            <div className="form-row">
+              <label className="center" htmlFor="ParkSelectGroup">
+                Which Park is this Route In
+              </label>
+              <select
+                className="form-control"
+                id="ParkSelectGroup"
+                onChange={this.onChange}
+                name="parkName"
+                value={parkName}
+              >
+                <option defaultValue>Choose a park</option>
+                {this.createParksOptions()}
+              </select>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm">
               <div className="form-row">
-                <div className="col-md-40 form-group form-large">
-                  <label className="center" htmlFor="ParkSelectGroup">
-                    Which Park is this Route In
+                <div className="col-md-7 form-group form-large">
+                  <label htmlFor="routeTypeSelect">
+                    What Type of Route Have You Discovered
                   </label>
                   <select
-                    className="form-control"
-                    id="ParkSelectGroup"
-                    onChange={this.onChange}
-                    name="parkName"
-                    value={parkName}
+                    className="custom-select col-md-5"
+                    id="routeTypeSelect"
+                    name="routeType"
+                    onChange={this.routeTypeChange}
+                    value={routeType}
                   >
-                    <option defaultValue>Choose a park</option>
-                    {this.createParksOptions()}
+                    <option value="sport">Sport</option>
+                    <option value="bouldering">Bouldering</option>
+                    <option value="traditional">Traditional</option>
                   </select>
                 </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-sm">
-                <div className="form-row">
-                  <div className="col-md-7 form-group form-large">
-                    <label htmlFor="routeTypeSelect">
-                      What Type of Route Have You Discovered
-                    </label>
-                    <select
-                      className="custom-select col-md-5"
-                      id="routeTypeSelect"
-                      name="routeType"
-                      onChange={e => this.handleChange(e)}
-                      value={routeType}
-                    >
-                      <option value="sport">Sport</option>
-                      <option value="bouldering">Bouldering</option>
-                      <option value="traditional">Traditional</option>
-                    </select>
-                  </div>
+              <div className="form-row">
+                <div className="col-md-7 form-group form-large">
+                  <label htmlFor="Route Name">Route Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputRouteName"
+                    aria-describedby="routeNameHelp"
+                    placeholder="Give a name"
+                    name="routeName"
+                    onChange={this.onChange}
+                    value={routeName}
+                  />
+                  <small id="routeNameHelp" className="form-text text-muted">
+                    We will let you know if this is already taken but you may
+                    still use it.
+                  </small>
                 </div>
-                <div className="form-row">
-                  <div className="col-md-7 form-group form-large">
-                    <label htmlFor="Route Name">Route Name</label>
+              </div>
+              {this.state.routeType == "bouldering" ? boulderGrade : ropeGrade}
+              <div className="form-row">
+                <label htmlFor="routeDescription">Route Description</label>
+                <textarea
+                  className="form-control"
+                  id="routeDescription"
+                  name="routeDescription"
+                  rows="10"
+                  placeholder="Description"
+                  onChange={this.onChange}
+                  value={routeDescription}
+                ></textarea>
+              </div>
+            </div>
+            <div className="col-sm">
+              <div className="form-row">
+                <label>Route profile picture</label>
+                <div className="input-group mb-3">
+                  <div className="custom-file">
                     <input
-                      type="text"
-                      className="form-control"
-                      id="inputRouteName"
-                      aria-describedby="routeNameHelp"
-                      placeholder="Give a name"
-                      name="routeName"
-                      onChange={this.onChange}
-                      value={routeName}
+                      type="file"
+                      className="custom-file-input"
+                      id="inputGroupFile01"
+                      aria-describedby="inputGroupFileAddon01"
                     />
-                    <small id="routeNameHelp" className="form-text text-muted">
-                      We will let you know if this is already taken but you may
-                      still use it.
+                    <label
+                      className="custom-file-label"
+                      htmlFor="inputGroupFile01"
+                    >
+                      Choose file
+                    </label>
+                    <small
+                      id="inputGroupFile01"
+                      className="form-text text-muted"
+                    >
+                      Please make sure it is a clear and complete photo.
                     </small>
                   </div>
                 </div>
-                {this.state.routeType == "bouldering"
-                  ? boulderGrade
-                  : ropeGrade}
-                <div className="form-row">
-                  <label htmlFor="routeDescription">Route Description</label>
-                  <textarea
-                    className="form-control"
-                    id="routeDescription"
-                    name="routeDescription"
-                    rows="10"
-                    placeholder="Description"
-                    onChange={this.onChange}
-                    value={routeDescription}
-                  ></textarea>
-                </div>
-                <div className="form-row pt-3">
-                  <button
-                    onClick={this.props.addRoute.bind(
-                      this,
-                      parkName,
-                      routeType,
-                      routeName,
-                      gradeNumber + gradeLetter,
-                      routeDescription,
-                      ""
-                    )}
-                    className="btn btn-primary btn-lg"
-                  >
-                    Add Route
-                  </button>
-                </div>
               </div>
-              <div className="col-sm">
-                <div className="form-row">
-                  <label>Route profile picture</label>
-                  <div className="input-group mb-3">
-                    <div className="custom-file">
-                      <input
-                        type="file"
-                        className="custom-file-input"
-                        id="inputGroupFile01"
-                        aria-describedby="inputGroupFileAddon01"
-                      />
-                      <label
-                        className="custom-file-label"
-                        htmlFor="inputGroupFile01"
-                      >
-                        Choose file
-                      </label>
-                      <small
-                        id="inputGroupFile01"
-                        className="form-text text-muted"
-                      >
-                        Please make sure it is a clear and complete photo.
-                      </small>
-                    </div>
-                  </div>
-                </div>
+              <div className="form-row pt-3">
+                <button className="btn btn-primary btn-lg">Add Route</button>
               </div>
             </div>
           </div>
