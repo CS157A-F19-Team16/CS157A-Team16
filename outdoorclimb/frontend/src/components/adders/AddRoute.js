@@ -25,7 +25,7 @@ export class AddRoute extends Component {
   }
 
   onSubmit = e => {
-    // e.preventDefault();
+    e.preventDefault();
     grade = gradeNumber;
     if (gradeLetter != "") {
       grade += gradeLetter;

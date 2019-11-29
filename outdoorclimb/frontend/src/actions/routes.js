@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ROUTES } from "./types";
+import { GET_ROUTES, ADD_ROUTE_SUCCESS, ADD_ROUTE_FAIL } from "./types";
 
 export const getRoutes = () => dispatch => {
   axios
@@ -20,7 +20,7 @@ export const addRoute = (
   grade,
   routeDescription,
   routeProfile
-) => (dispatch, getState) => {
+) => dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -35,5 +35,18 @@ export const addRoute = (
     routeDescription,
     routeProfile
   });
-  axios.post("/routesapp/addRoute/", body, config);
+  axios
+    .post("/routesapp/addRoute/", body, config)
+    .then(res => {
+      dispatch({
+        type: ADD_ROUTE_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: ADD_ROUTE_FAIL
+      });
+    });
 };

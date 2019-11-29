@@ -41,7 +41,7 @@ export class AddPark extends Component {
     const { parkName, location } = this.state;
     return (
       <div>
-        <form className="py-5" onSubmit={this.onSubmit}>
+        <form className="py-5">
           <div className="form-group">
             <div className="form-row">
               <div className="input-group input-group-lg">
@@ -108,7 +108,10 @@ export class AddPark extends Component {
               </div>
             </div>
             <div className="form-group pt-5">
-              <button type="submit" className="btn btn-primary">
+              <button
+                className="btn btn-primary"
+                onClick={this.props.addPark.bind(this, parkName, location)}
+              >
                 Add Park
               </button>
             </div>

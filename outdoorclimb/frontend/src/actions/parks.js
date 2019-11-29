@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_PARKS } from "./types";
+import { GET_PARKS, ADD_PARK_SUCCESS, ADD_PARK_FAIL } from "./types";
 
 export const getParks = () => dispatch => {
   axios
@@ -42,6 +42,17 @@ export const addPark = (parkName, location) => dispatch => {
     parkName,
     location
   });
-  console.log(body);
-  axios.post("/routesapp/addPark/", body, config);
+  axios
+    .post("/routesapp/addPark/", body, config)
+    .then(res => {
+      dispatch({
+        type: ADD_PARK_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: ADD_PARK_FAIL
+      });
+    });
 };
