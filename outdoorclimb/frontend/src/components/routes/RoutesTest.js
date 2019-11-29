@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export class AddRoute extends Component {
+export class RouteTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,6 +62,12 @@ export class AddRoute extends Component {
   render() {
 
     let {imagePreviewUrl} = this.state;
+    let $imagePreview = null;
+    if (imagePreviewUrl) {
+      $imagePreview = (<img src={imagePreviewUrl} />);
+    } else {
+      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+    }
 
     const ropeGrade = (
       <div className="form-row">
@@ -155,7 +161,7 @@ export class AddRoute extends Component {
               </div>
               <div className="col-sm">
                 <div className="form-row">
-                  <label>Route profile picture</label>
+                  <label>Route profile picture1</label>
                   <div className="input-group mb-3">
                     <div className="custom-file">
                       <input
@@ -181,16 +187,17 @@ export class AddRoute extends Component {
                   </div>
                 </div>
                 <div className="form-row">
-                  <img src={imagePreviewUrl} class="img-fluid" alt="Image Preview"/>
+                  <div className="preview">
+                    {$imagePreview}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </form>
       </div>
-    );
+    );  
   }
 }
 
-
-export default AddRoute;
+export default RouteTest;

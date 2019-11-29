@@ -20,6 +20,7 @@ import RoutesBrowser from "./routes/RoutesBrowser";
 import PrivateRoute from "./common/PrivateRoute";
 import AddRoute from "./adders/AddRoute";
 import RoutesViewer from "./routes/RoutesViewer";
+import RoutesTest from "./routes/RoutesTest";
 
 import { Provider } from "react-redux";
 import store from "../store";
@@ -49,6 +50,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/routesviewer" component={RoutesViewer} />
                   <Route exact path="/addroute" component={AddRoute} />
+                  <Route exact path="/routestest" component={RoutesTest} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                   <Route
