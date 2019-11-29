@@ -1,34 +1,92 @@
 import React, { Component } from "react";
+import { getParks } from "../../actions/parks";
+import { addRoute } from "../../actions/routes";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 export class AddRoute extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      routeType: ""
-    };
-    this.handleChange = this.handleChange.bind(this);
+  state = {
+    parkName: "",
+    routeType: "",
+    gradeNumber: "",
+    gradeLetter: "",
+    routeName: "",
+    routeDescription: ""
+  };
+
+  static propTypes = {
+    parks: PropTypes.array.isRequired,
+    getParks: PropTypes.func.isRequired,
+    addRoute: PropTypes.func.isRequired
+  };
+
+  componentDidMount() {
+    this.props.getParks();
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+    grade = gradeNumber;
+    if (gradeLetter != "") {
+      grade += gradeLetter;
+    }
+    const {
+      parkName,
+      routeType,
+      gradeNumber,
+      gradeLetter,
+      routeName,
+      routeDescription
+    } = this.state;
+    if (parkName != "" && routeName != "") {
+      this.props.addRoute(
+        parkName,
+        routeType,
+        routeName,
+        grade,
+        routeDescription,
+        ""
+      );
+      this.setState({
+        parkName: "",
+        routeType: "",
+        gradeNumber: "",
+        gradeLetter: "",
+        routeName: "",
+        routeDescription: ""
+      });
+    }
+  };
+
+  onChange = e =>
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+
+  handleChange(selectedOption) {
+    this.setState({ routeType: selectedOption.target.value });
   }
 
   createRouteGrades() {
     let items = [];
     for (let i = 0; i < 15; i++) {
       let second = 2 + i;
-      let grade = "5." + second;
+      let gradeNumber = "5." + second;
       items.push(
-        <option key={"ropeGrade" + i} value={grade}>
-          {grade}
+        <option key={"ropeGrade" + i} value={gradeNumber}>
+          {gradeNumber}
         </option>
       );
     }
     return items;
   }
 
-  createRouteGrades() {
+  createBoulderGrades() {
     let items = [];
     for (let i = 0; i < 16; i++) {
       let grade = "V" + i;
       items.push(
-        <option key={"ropeGrade" + i} value={grade}>
+        <option key={"boulderGrade" + i} value={grade}>
           {grade}
         </option>
       );
@@ -36,24 +94,53 @@ export class AddRoute extends Component {
     return items;
   }
 
-  handleChange(selectedOption) {
-    console.log(selectedOption.target.value);
-    this.setState({ routeType: selectedOption.target.value });
+  createParksOptions() {
+    let items = [];
+    for (let i = 0; i < this.props.parks.length; i++) {
+      let displayString = this.props.parks[i].name;
+      items.push(
+        <option key={"park" + i} name="parkName" value={displayString}>
+          {displayString}
+        </option>
+      );
+    }
+    return items;
   }
 
   render() {
+    const {
+      parkName,
+      routeType,
+      gradeNumber,
+      gradeLetter,
+      routeName,
+      routeDescription
+    } = this.state;
+
     const ropeGrade = (
       <div className="form-row">
         <div className="form-group col-md-2.5">
           <label htmlFor="gradeNumber">Grade</label>
-          <select id="gradeNumber" className="form-control">
+          <select
+            id="gradeNumber"
+            name="gradeNumber"
+            className="form-control"
+            onChange={this.onChange}
+            value={gradeNumber}
+          >
             <option defaultValue>Number</option>
             {this.createRouteGrades()}
           </select>
         </div>
         <div className="form-group col-md-1.5 pt-2">
           <label htmlFor="gradeLetter"></label>
-          <select id="gradeLetter" className="form-control">
+          <select
+            id="gradeLetter"
+            name="gradeLetter"
+            className="form-control"
+            onChange={this.onChange}
+            value={gradeLetter}
+          >
             <option defaultValue>Letter</option>
             <option>a</option>
             <option>b</option>
@@ -68,17 +155,42 @@ export class AddRoute extends Component {
       <div className="form-row">
         <div className="form-group col-md-2.5">
           <label htmlFor="gradeNumber">Grade</label>
-          <select id="gradeNumber" className="form-control">
+          <select
+            id="gradeNumber"
+            name="gradeNumber"
+            className="form-control"
+            onChange={this.onChange}
+            value={gradeNumber}
+          >
             <option defaultValue>Number</option>
-            {this.createRouteGrades()}
+            {this.createBoulderGrades()}
           </select>
         </div>
       </div>
     );
     return (
       <div>
-        <form className="py-5">
+        <form onSubmit={this.onSubmit} className="py-5">
           <div className="container">
+            <div className="row">
+              <div className="form-row">
+                <div className="col-md-40 form-group form-large">
+                  <label className="center" htmlFor="ParkSelectGroup">
+                    Which Park is this Route In
+                  </label>
+                  <select
+                    className="form-control"
+                    id="ParkSelectGroup"
+                    onChange={this.onChange}
+                    name="parkName"
+                    value={parkName}
+                  >
+                    <option defaultValue>Choose a park</option>
+                    {this.createParksOptions()}
+                  </select>
+                </div>
+              </div>
+            </div>
             <div className="row">
               <div className="col-sm">
                 <div className="form-row">
@@ -89,8 +201,9 @@ export class AddRoute extends Component {
                     <select
                       className="custom-select col-md-5"
                       id="routeTypeSelect"
-                      onChange={this.handleChange}
-                      value={this.state.value}
+                      name="routeType"
+                      onChange={e => this.handleChange(e)}
+                      value={routeType}
                     >
                       <option value="sport">Sport</option>
                       <option value="bouldering">Bouldering</option>
@@ -107,6 +220,9 @@ export class AddRoute extends Component {
                       id="inputRouteName"
                       aria-describedby="routeNameHelp"
                       placeholder="Give a name"
+                      name="routeName"
+                      onChange={this.onChange}
+                      value={routeName}
                     />
                     <small id="routeNameHelp" className="form-text text-muted">
                       We will let you know if this is already taken but you may
@@ -122,12 +238,26 @@ export class AddRoute extends Component {
                   <textarea
                     className="form-control"
                     id="routeDescription"
+                    name="routeDescription"
                     rows="10"
-                    defaultValue="Description:"
+                    placeholder="Description"
+                    onChange={this.onChange}
+                    value={routeDescription}
                   ></textarea>
                 </div>
                 <div className="form-row pt-3">
-                  <button type="button" className="btn btn-primary btn-lg">
+                  <button
+                    onClick={this.props.addRoute.bind(
+                      this,
+                      parkName,
+                      routeType,
+                      routeName,
+                      gradeNumber + gradeLetter,
+                      routeDescription,
+                      ""
+                    )}
+                    className="btn btn-primary btn-lg"
+                  >
                     Add Route
                   </button>
                 </div>
@@ -167,4 +297,8 @@ export class AddRoute extends Component {
   }
 }
 
-export default AddRoute;
+const mapStateToProps = state => ({
+  parks: state.parks.parks
+});
+
+export default connect(mapStateToProps, { getParks, addRoute })(AddRoute);

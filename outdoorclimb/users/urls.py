@@ -9,7 +9,7 @@ router.register('api/explorer', ExplorerViewSet, 'explorer')
 router.register('api/comment', CommentViewSet, 'comment')
 
 urlpatterns = [
-    # router.urls
     path("users/explorerRegister/",
          register_explorer, name="register_explorer"),
 ]
+urlpatterns += router.urls

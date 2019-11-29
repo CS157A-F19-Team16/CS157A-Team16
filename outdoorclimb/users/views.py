@@ -3,6 +3,8 @@ from .models import Explorer
 from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.db import connection
+import json
 
 
 # Create your views here.
@@ -11,12 +13,13 @@ from django.http import JsonResponse
 @csrf_exempt
 def register_explorer(request):
     if request.method == 'POST':
-        string = request.body
-        print("register explorer url")
-        print(string)
-        query = 'INSERT INTO users_explorer VALUES()'
-        explorer = Explorer.objects.raw(
-            query
-        )
-        data = []
+        request_body = request.body
+        json_string = request_body.decode('utf8')
+        data = json.loads(json_string)
+        print(data)
+        query = 'INSERT INTO users_explorer VALUES(\'' + \
+            data['email'] + '\',\'' + data['fulladdress'] + \
+                '\',\'' + str(data['phone']) + '\');'
+        with connection.cursor() as cursor:
+            cursor.execute(query)
         return JsonResponse(data, safe=False)

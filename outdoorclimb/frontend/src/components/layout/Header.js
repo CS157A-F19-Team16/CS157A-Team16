@@ -11,7 +11,22 @@ export class Header extends Component {
   };
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const { isExplorerAuthenticated, isAuthenticated, user } = this.props.auth;
+
+    const explorerLinks = (
+      <ul className="navbar-nav mc-auto">
+        <li className="navitem">
+          <Link to="/addpark" className="nav-link">
+            Add Park
+          </Link>
+        </li>
+        <li className="navitem">
+          <Link to="/addroute" className="nav-link">
+            Add Route
+          </Link>
+        </li>
+      </ul>
+    );
 
     const userLinks = (
       <ul className="navbar-nav mc-auto">
@@ -78,6 +93,7 @@ export class Header extends Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            {isExplorerAuthenticated ? explorerLinks : null}
             {isAuthenticated ? userLinks : null}
             {isAuthenticated ? logoutLink : guestLinks}
           </div>
@@ -91,7 +107,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { logout }
-)(Header);
+export default connect(mapStateToProps, { logout })(Header);

@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { register, explorerRegister } from "../../actions/auth";
+import { returnErrors, createMessage } from "../../actions/messages";
 
-export default class ExplorerRegister extends Component {
+export class ExplorerRegister extends Component {
   state = {
     username: "",
     email: "",
@@ -12,6 +16,13 @@ export default class ExplorerRegister extends Component {
     phone: "",
     password: "",
     password2: ""
+  };
+
+  static propTypes = {
+    register: PropTypes.func.isRequired,
+    explorerRegister: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+    isExplorerAuthenticated: PropTypes.bool
   };
 
   states = [
@@ -75,7 +86,11 @@ export default class ExplorerRegister extends Component {
   createStateOptions() {
     let items = [];
     for (let i = 0; i < this.states.length; i++) {
-      items.push(<option>{this.states[i]}</option>);
+      items.push(
+        <option key={i} value={this.state[i]} onChange={this.onChange}>
+          {this.states[i]}
+        </option>
+      );
     }
     return items;
   }
@@ -87,21 +102,44 @@ export default class ExplorerRegister extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { username, email, password, password2 } = this.state;
+    const {
+      username,
+      email,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      password,
+      password2
+    } = this.state;
     if (password != password2) {
       this.props.createMessage({ passwordNotMatch: "Passwords do not match" });
     } else {
-      const newUser = {
-        username,
-        password,
-        email
-      };
-      this.props.register(newUser);
+      this.props.register(username, password, email);
+      // //Add the user to the explorer table
     }
   };
 
+  componentDidUpdate(nextProps) {
+    const newValue = nextProps.isAuthenticated;
+    const {
+      username,
+      email,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      password,
+      password2
+    } = this.state;
+    if (newValue !== this.props.isAuthenticated && newValue == true) {
+      this.props.explorerRegister(email, address, city, state, zip, phone);
+    }
+  }
   render() {
-    if (this.props.isAuthenticated) {
+    if (this.props.isExplorerAuthenticated) {
       return <Redirect to="/" />;
     }
     const {
@@ -130,6 +168,7 @@ export default class ExplorerRegister extends Component {
                 <input
                   type="text"
                   className="form-control"
+                  placeholder="superman"
                   name="username"
                   onChange={this.onChange}
                   value={username}
@@ -139,6 +178,7 @@ export default class ExplorerRegister extends Component {
                 <label>Email</label>
                 <input
                   type="email"
+                  placeholder="email@email.com"
                   className="form-control"
                   name="email"
                   onChange={this.onChange}
@@ -162,6 +202,7 @@ export default class ExplorerRegister extends Component {
                 <input
                   type="text"
                   className="form-control"
+                  placeholder="Malibu"
                   name="city"
                   id="inputCity"
                   onChange={this.onChange}
@@ -175,31 +216,36 @@ export default class ExplorerRegister extends Component {
                     id="inputState"
                     name="state"
                     className="form-control"
-                    placeholder="Choose"
                     value={state}
                     onChange={this.onChange}
                   >
-                    <option selected>Choose...</option>
+                    <option key={-1} value="Choose" defaultValue>
+                      Choose...
+                    </option>
                     {this.createStateOptions()}
                   </select>
                 </div>
                 <div className="form-group col-md-5">
                   <label htmlFor="inputZip">Zip</label>
                   <input
-                    type="text"
-                    className="form-control"
                     id="inputZip"
-                    value={zip}
+                    name="zip"
+                    type="number"
+                    className="form-control"
+                    placeholder="1111"
                     onChange={this.onChange}
+                    value={zip}
                   />
                 </div>
               </div>
               <div className="form-group">
-                <label>Phone</label>
+                <label htmlFor="inputPhone">Phone</label>
                 <input
-                  type="password"
+                  id="inputPhone"
+                  type="number"
+                  placeholder="1-234-567-8910"
                   className="form-control"
-                  name="password"
+                  name="phone"
                   onChange={this.onChange}
                   value={phone}
                 />
@@ -239,3 +285,14 @@ export default class ExplorerRegister extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  isExplorerAuthenticated: state.auth.isExplorerAuthenticated
+});
+
+export default connect(mapStateToProps, {
+  register,
+  explorerRegister,
+  createMessage
+})(ExplorerRegister);
