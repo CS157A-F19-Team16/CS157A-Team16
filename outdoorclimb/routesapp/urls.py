@@ -1,6 +1,6 @@
 from rest_framework import routers
 from .api import ParksViewSet, RocksViewSet, RoutesViewSet, Boulder_RoutesViewSet, Sport_RoutesViewSet, Traditional_RoutesViewSet, Pictures_of_RoutesViewSet, PitchesViewSet
-from .views import routes_park_detail, routes_parks_list, add_park
+from .views import routes_park_detail, routes_parks_list, add_park, add_route
 from django.urls import path
 
 router = routers.DefaultRouter()
@@ -20,4 +20,5 @@ urlpatterns = [
     path("routesapp/addPark/", add_park, name="add_park"),
     path("routesapp/parks", routes_parks_list, name="routes_parks_list"),
     path("routesapp/parks/<pk>", routes_park_detail, name="routes_parks_detail"),
+    path("routesapp/addRoute/", add_route, name="add_route")
 ]

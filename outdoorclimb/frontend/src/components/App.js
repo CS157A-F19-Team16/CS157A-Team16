@@ -46,10 +46,10 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <Route exact path="/addroute" component={AddRoute} />
+                  <PrivateRoute exact path="/addroute" component={AddRoute} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
-                  <Route exact path="/addpark" component={AddPark} />
+                  <PrivateRoute exact path="/addpark" component={AddPark} />
                   <Route
                     exact
                     path="/explorerlogin"
@@ -60,12 +60,16 @@ class App extends Component {
                     path="/explorerregister/"
                     component={ExplorerRegister}
                   />
-                  <Route
+                  <PrivateRoute
                     exact
                     path="/routesbrowser"
                     component={RoutesBrowser}
                   />
-                  <Route exact path="/parksbrowse" component={ParksBrowse} />
+                  <PrivateRoute
+                    exact
+                    path="/parksbrowse"
+                    component={ParksBrowse}
+                  />
                   <PrivateRoute exact path="/" component={Dashboard} />
                 </Switch>
               </div>

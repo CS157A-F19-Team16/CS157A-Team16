@@ -12,3 +12,28 @@ export const getRoutes = () => dispatch => {
     })
     .catch(err => console.log(err));
 };
+
+export const addRoute = (
+  parkName,
+  routeType,
+  routeName,
+  grade,
+  routeDescription,
+  routeProfile
+) => (dispatch, getState) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({
+    parkName,
+    routeType,
+    routeName,
+    grade,
+    routeDescription,
+    routeProfile
+  });
+  axios.post("/routesapp/addRoute/", body, config);
+};
