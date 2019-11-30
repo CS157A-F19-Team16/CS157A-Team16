@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 from django.http import HttpResponse
-from .models import Parks
+from .models import Parks, Routes, Boulder_Routes, Sport_Routes, Traditional_Routes
 from django.http import JsonResponse
 from django.db import connection
 import json
@@ -89,3 +89,80 @@ def add_sport(route_id):
 def create_route_id(route_name, park_name):
     concat = route_name + park_name
     return hashlib.sha224(concat.encode()).hexdigest()
+
+
+def search_route(request):
+    if request.method == 'GET':
+        request_body = request.body
+        json_string = request_body.decode('utf8')
+        data = json.loads(json_string)
+        routes = []
+        if data['boulderingCheck']:
+            with connection.cursor() as cursor:
+                routes_query = Routes.objects.raw(
+                    create_boulder_query(data['boulderGradeOne'], data['boulderGradeTwo']))  # Enter proper data
+                for row in routes_query:
+                    routes.append({"routes_id": row.route_id, "route_name": row.route_name, "park_name": row.park_name, "route_location_on_park": row.route_location_on_park,
+                                   "description": row.description, "grade": row.grade, "rating": row.rating, "profile_picture": row.profile_picture})
+        if data['sportCheck']:
+            with connection.cursor() as cursor:
+                routes_query = Routes.objects.raw(
+                    'SELECT r.* FROM routesapp_routes r, routesapp_sport_routes WHERE r.route_id = routesapp_sport_routes.route_id;')
+                for row in routes_query:
+                    routes.append({"routes_id": row.route_id, "route_name": row.route_name, "park_name": row.park_name, "route_location_on_park": row.route_location_on_park,
+                                   "description": row.description, "grade": row.grade, "rating": row.rating, "profile_picture": row.profile_picture})
+        if data['traditionalCheck']:
+            with connection.cursor() as cursor:
+                routes_query = Routes.objects.raw(
+                    'SELECT r.* FROM routesapp_routes r, routesapp_traditional_routes WHERE r.route_id = routesapp_traditional_routes.route_id;')
+                for row in routes_query:
+                    routes.append({"routes_id": row.route_id, "route_name": row.route_name, "park_name": row.park_name, "route_location_on_park": row.route_location_on_park,
+                                   "description": row.description, "grade": row.grade, "rating": row.rating, "profile_picture": row.profile_picture})
+        return JsonResponse(routes, safe=False)
+
+
+def create_boulder_query(gradeOne, gradeTwo):
+    boulder_grades = ["V0", "V1", "V2", "V3", "V4", "V5", "V6",
+                      "V7", "V8", "V9", "V10", "V11", "V12", "V13", "V14", "V15"]
+    gradeHigh = gradeTwo
+    gradeLow = gradeOne
+    if boulder_grades.index(gradeOne) >= boulder_grades.index(gradeTwo):
+        gradeHigh = gradeOne
+        gradeLow = gradeTwo
+    append_grades = ""
+    for grade in boulder_grades:
+        if boulder_grades.index(gradeLow) <= boulder_grades.index(grade) and boulder_grades.index(gradeHigh) >= boulder_grades.index(grade):
+            where_clause = "OR r.grade=\""+grade + "\" "
+            append_grades = append_grades + where_clause
+    query = 'SELECT r.* FROM routesapp_routes r, routesapp_boulder_routes WHERE r.route_id = routesapp_boulder_routes.route_id'
+    if append_grades != "":
+        query = query + " AND (" + append_grades[2:] + ");"
+    print(query)
+    return query
+
+
+def create_sport_query(gradeLow, gradeHigh):
+    route_grades = generate_route_grades
+    append_string = ""
+    query = 'SELECT r.* FROM routesapp_routes r, routesapp_sport_routes WHERE r.route_id = routesapp_sport_routes.route_id;'
+    return query
+
+
+def create_traditional_query(gradeLow, gradeHigh):
+    route_grades = generate_route_grades
+    query = 'SELECT r.* FROM routesapp_routes r, routesapp_traditional_routes WHERE r.route_id = routesapp_traditional_routes.route_id;'
+    return query
+
+
+def generate_route_grades():
+    routes_grade = []
+    for i in range(2, 17):
+        gradeNumber = "5." + i
+        if i <= 9:
+            routes_grade.append(gradeNumber)
+        else:
+            routes_grade.append(gradeNumber + 'a')
+            routes_grade.append(gradeNumber + 'b')
+            routes_grade.append(gradeNumber + 'c')
+            routes_grade.append(gradeNumber + 'd')
+    return routes_grade

@@ -70,7 +70,7 @@ class App extends Component {
                     path="/parksbrowse"
                     component={ParksBrowse}
                   />
-                  <PrivateRoute exact path="/" component={Dashboard} />
+                  <Route exact path="/" component={Dashboard} />
                 </Switch>
               </div>
             </Fragment>

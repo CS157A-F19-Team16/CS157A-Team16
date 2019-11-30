@@ -13,6 +13,10 @@ export const getRoutes = () => dispatch => {
     .catch(err => console.log(err));
 };
 
+export const searchRoute = () => dispatch => {
+  axios.get("/routesapp/searchRoutes");
+};
+
 export const addRoute = (
   parkName,
   routeType,

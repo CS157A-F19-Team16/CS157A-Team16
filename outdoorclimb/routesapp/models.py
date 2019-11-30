@@ -29,7 +29,7 @@ class Routes(models.Model):
     description = models.CharField(max_length=2000)
     grade = models.CharField(max_length=5)
     rating = models.DecimalField(decimal_places=1, max_digits=2)
-    profile_picture = models.ImageField()
+    profile_picture = models.CharField(max_length=1000)
 
     class Meta:
         unique_together = [['route_id', 'route_name', 'park_name']]
