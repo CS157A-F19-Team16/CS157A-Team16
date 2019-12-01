@@ -3,6 +3,7 @@ import { getParks } from "../../actions/parks";
 import { addRoute } from "../../actions/routes";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import axios from 'axios';
 
 export class AddRoute extends Component {
   state = {
@@ -13,7 +14,8 @@ export class AddRoute extends Component {
     routeName: "",
     routeDescription: "",
     file: '',
-    imagePreviewUrl: ''
+    imagePreviewUrl: '',
+    image: null
   };
   
   static propTypes = {
@@ -34,7 +36,10 @@ export class AddRoute extends Component {
       gradeNumber,
       gradeLetter,
       routeName,
-      routeDescription
+      routeDescription,
+      file,
+      imagePreviewUrl,
+      image
     } = this.state;
     let grade = gradeNumber;
     if (gradeLetter != "") {
@@ -42,21 +47,42 @@ export class AddRoute extends Component {
     }
     if (parkName != "" && routeName != "") {
       console.log(routeType);
-      this.props.addRoute(
-        parkName,
-        routeType,
-        routeName,
-        grade,
-        routeDescription,
-        ""
-      );
+      //save image
+      let form_data = new FormData();
+      form_data.append('image', image, image.name);
+      let url = 'http://localhost:8000/api/posts/';
+      var routeprofile = '';
+      axios.post(url, form_data, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      })
+        .then(res => {
+          console.log(res.data);
+          routeprofile = res.data.image;
+          console.log('url is ' + routeprofile);
+          this.props.addRoute(
+            parkName,
+            routeType,
+            routeName,
+            grade,
+            routeDescription,
+            routeprofile
+          );
+        })
+        .catch(err => console.log(err))
+      //image in post
+
       this.setState({
         parkName: "",
         routeType: "",
         gradeNumber: "",
         gradeLetter: "",
         routeName: "",
-        routeDescription: ""
+        routeDescription: "",
+        file: '',
+        imagePreviewUrl: '',
+        image: ''
       });
     }
   };
@@ -84,6 +110,7 @@ export class AddRoute extends Component {
     reader.onloadend = () => {
       this.setState({
         file: file,
+        image: file,
         imagePreviewUrl: reader.result
       });
     }
@@ -295,7 +322,7 @@ export class AddRoute extends Component {
                   </div>
                 </div>
                 <div className="form-row">
-                   <img src={imagePreviewUrl} class="img-fluid" alt="Image Preview"/>
+                   <img src={imagePreviewUrl} classname="img-fluid" alt="Image Preview"/>
                 </div>
               </div>
               <div className="form-row pt-3">

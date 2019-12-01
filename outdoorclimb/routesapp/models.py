@@ -70,3 +70,6 @@ class Pitches(models.Model):
 
     class Meta:
         unique_together = [['route_id', 'pitch_number']]
+
+class Post(models.Model):
+    image = models.ImageField(upload_to='post_images')

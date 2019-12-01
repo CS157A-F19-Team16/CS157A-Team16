@@ -1,6 +1,6 @@
 from rest_framework import routers
 from .api import ParksViewSet, RocksViewSet, RoutesViewSet, Boulder_RoutesViewSet, Sport_RoutesViewSet, Traditional_RoutesViewSet, Pictures_of_RoutesViewSet, PitchesViewSet
-from .views import routes_park_detail, query_route, routes_parks_list, add_park, add_route, search_route
+from .views import routes_park_detail, query_route, routes_parks_list, add_park, add_route, search_route, PostView
 from django.urls import path
 
 router = routers.DefaultRouter()
@@ -22,5 +22,6 @@ urlpatterns = [
     path("routesapp/parks/<pk>", routes_park_detail, name="routes_parks_detail"),
     path("routesapp/addRoute/", add_route, name="add_route"),
     path("routesapp/searchRoutes/", search_route, name="search_route"),
-    path("routesapp/singleRoute/<id>", query_route, name="query_route")
+    path("routesapp/singleRoute/<id>", query_route, name="query_route"),
+    path('posts/', PostView.as_view(), name= 'posts_list')
 ]

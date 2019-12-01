@@ -82,7 +82,7 @@ export class RoutesViewer extends Component {
 }
 
 const mapStateToProps = state => ({
-  route: state.route.route
+  route: state.route.singleroute
 });
 
 export default connect(

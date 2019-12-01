@@ -2,11 +2,16 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 from django.http import HttpResponse
-from .models import Parks, Routes, Boulder_Routes, Sport_Routes, Traditional_Routes
+from .models import Parks, Routes, Boulder_Routes, Sport_Routes, Traditional_Routes, Post
 from django.http import JsonResponse
 from django.db import connection
 import json
 import hashlib
+from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import PostSerializer
 
 
 def index(request):
@@ -214,3 +219,20 @@ def generate_route_grades():
             routes_grade.append(gradeNumber + 'c')
             routes_grade.append(gradeNumber + 'd')
     return routes_grade
+
+class PostView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request, *args, **kwargs):
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        posts_serializer = PostSerializer(data=request.data)
+        if posts_serializer.is_valid():
+            posts_serializer.save()
+            return Response(posts_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print('error', posts_serializer.errors)
+            return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
