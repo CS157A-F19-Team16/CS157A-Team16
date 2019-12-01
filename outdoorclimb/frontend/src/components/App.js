@@ -22,6 +22,7 @@ import AddRoute from "./adders/AddRoute";
 import RoutesViewer from "./routes/RoutesViewer";
 import RoutesTest from "./routes/RoutesTest";
 
+import AddPark from "./adders/AddPark";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
@@ -51,8 +52,10 @@ class App extends Component {
                   <Route exact path="/routesviewer" component={RoutesViewer} />
                   <Route exact path="/addroute" component={AddRoute} />
                   <Route exact path="/routestest" component={RoutesTest} />
+                  <PrivateRoute exact path="/addroute" component={AddRoute} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
+                  <PrivateRoute exact path="/addpark" component={AddPark} />
                   <Route
                     exact
                     path="/explorerlogin"
@@ -60,10 +63,10 @@ class App extends Component {
                   />
                   <Route
                     exact
-                    path="/explorerregister"
+                    path="/explorerregister/"
                     component={ExplorerRegister}
                   />
-                  <Route
+                  <PrivateRoute
                     exact
                     path="/routesbrowser"
                     component={RoutesBrowser}
@@ -71,6 +74,12 @@ class App extends Component {
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/parksbrowse" component={ParksBrowse} />
                   <PrivateRoute exact path="/" component={Dashboard} />
+                  <PrivateRoute
+                    exact
+                    path="/parksbrowse"
+                    component={ParksBrowse}
+                  />
+                  <Route exact path="/" component={Dashboard} />
                 </Switch>
               </div>
             </Fragment>

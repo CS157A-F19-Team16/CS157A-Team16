@@ -5,11 +5,13 @@ import errors from "./errors";
 import auth from "./auth";
 import messages from "./messages";
 import parks from "./parks";
+import routes from "./routes";
 
 export default combineReducers({
   users,
   errors,
   auth,
   messages,
-  parks
+  parks,
+  routes
 });

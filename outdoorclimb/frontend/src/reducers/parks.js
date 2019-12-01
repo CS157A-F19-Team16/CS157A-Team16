@@ -1,4 +1,8 @@
-import { GET_PARKS } from "../actions/types.js";
+import {
+  GET_PARKS,
+  ADD_PARK_SUCCESS,
+  ADD_PARK_FAIL
+} from "../actions/types.js";
 
 const initialState = {
   parks: []
@@ -10,6 +14,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         parks: action.payload
+      };
+    case ADD_PARK_FAIL:
+    case ADD_PARK_SUCCESS:
+      return {
+        ...state,
+        parks: [...state.parks, action.payload]
       };
     default:
       return state;

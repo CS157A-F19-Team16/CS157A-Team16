@@ -2,12 +2,19 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { login } from "../../actions/auth";
+import { login, explorerLogin } from "../../actions/auth";
 
-export default class ExplorerLogin extends Component {
+export class ExplorerLogin extends Component {
   state = {
     username: "",
     password: ""
+  };
+
+  static propTypes = {
+    login: PropTypes.func.isRequired,
+    explorerLogin: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+    isExplorerAuthenticated: PropTypes.bool
   };
 
   onSubmit = e => {
@@ -20,8 +27,15 @@ export default class ExplorerLogin extends Component {
       [e.target.name]: e.target.value
     });
 
+  componentWillReceiveProps(nextProps) {
+    const newValue = nextProps.isAuthenticated;
+    if (newValue !== this.props.isAuthenticated && newValue == true) {
+      this.props.explorerLogin();
+    }
+  }
+
   render() {
-    if (this.props.isAuthenticated) {
+    if (this.props.isExplorerAuthenticated) {
       return <Redirect to="/" />;
     }
     const { username, password } = this.state;
@@ -61,7 +75,7 @@ export default class ExplorerLogin extends Component {
               </div>
               <p>
                 Don't have an account?{" "}
-                <Link to="/explorerregister">Register</Link>
+                <Link to="/explorerregister/">Register</Link>
               </p>
             </form>
           </div>
@@ -70,3 +84,13 @@ export default class ExplorerLogin extends Component {
     );
   }
 }
+
+const mapStateTopProps = state => ({
+  isExplorerAuthenticated: state.auth.isAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateTopProps, {
+  login,
+  explorerLogin
+})(ExplorerLogin);
