@@ -1,11 +1,22 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+import PropTypes from "prop-types";
+import { getSingleRoute } from "../../actions/singleroute";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-export default class RoutesViewer extends Component {
-
+export class RoutesViewer extends Component {
 
     /**
      * Need to somehow get which route is being viewed and determine type of route
      */
+    static propTypes = {
+      route: PropTypes.array.isRequired,
+      getSingleParks: PropTypes.func.isRequired
+    };
+
+    componentDidMount() {
+      this.props.getSingleParks(1);
+    }
 
     render() {
         return (
@@ -69,3 +80,12 @@ export default class RoutesViewer extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+  route: state.route.route
+});
+
+export default connect(
+  mapStateToProps,
+  { getSingleRoute }
+)(RoutesViewer);

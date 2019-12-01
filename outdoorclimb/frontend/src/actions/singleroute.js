@@ -1,9 +1,9 @@
 import axios from "axios";
-import { GET_PARKS } from "./types";
+import { GET_SINGLEROUTE } from "./types";
 
-export const getSingleRoute = () => dispatch => {
+export const getSingleRoute = (id) => dispatch => {
   axios
-    .get("/routesapp/route")
+    .get("/routesapp/singleroute/" + id)
     .then(res => {
       dispatch({
         type: GET_SINGLEROUTE,

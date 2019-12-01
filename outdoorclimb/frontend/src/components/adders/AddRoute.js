@@ -5,23 +5,17 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 export class AddRoute extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      routeType: "",
-      file: '',
-      imagePreviewUrl: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
   state = {
     parkName: "",
     routeType: "",
     gradeNumber: "",
     gradeLetter: "",
     routeName: "",
-    routeDescription: ""
+    routeDescription: "",
+    file: '',
+    imagePreviewUrl: ''
   };
-
+  
   static propTypes = {
     parks: PropTypes.array.isRequired,
     getParks: PropTypes.func.isRequired,
@@ -81,6 +75,22 @@ export class AddRoute extends Component {
     }
   };
 
+  handleImageChange(e){
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+
+    reader.readAsDataURL(file)
+  }
+
   createRouteGrades() {
     let items = [];
     for (let i = 0; i < 15; i++) {
@@ -121,25 +131,10 @@ export class AddRoute extends Component {
     return items;
   }
 
-  handleImageChange(e){
-    e.preventDefault();
-
-    let reader = new FileReader();
-    let file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
-    }
-
-    reader.readAsDataURL(file)
-  }
-
   render() {
 
     let {imagePreviewUrl} = this.state;
+
     const {
       parkName,
       routeType,
@@ -283,6 +278,7 @@ export class AddRoute extends Component {
                       className="custom-file-input"
                       id="inputGroupFile01"
                       aria-describedby="inputGroupFileAddon01"
+                      onChange={(e)=>this.handleImageChange(e)}
                     />
                     <label
                       className="custom-file-label"
@@ -298,37 +294,10 @@ export class AddRoute extends Component {
                     </small>
                   </div>
                 </div>
+                <div className="form-row">
+                   <img src={imagePreviewUrl} class="img-fluid" alt="Image Preview"/>
+                </div>
               </div>
-              <div className="col-sm">
-                <div className="form-row">
-                  <label>Route profile picture</label>
-                  <div className="input-group mb-3">
-                    <div className="custom-file">
-                      <input
-                        type="file"
-                        className="custom-file-input"
-                        id="inputGroupFile01"
-                        aria-describedby="inputGroupFileAddon01"
-                        onChange={(e)=>this.handleImageChange(e)}
-                      />
-                      <label
-                        className="custom-file-label"
-                        htmlFor="inputGroupFile01"
-                      >
-                        Choose file
-                      </label>
-                      <small
-                        id="inputGroupFile01"
-                        className="form-text text-muted"
-                      >
-                        Please make sure it is a clear and complete photo.
-                      </small>
-                    </div>
-                  </div>
-                </div>
-                <div className="form-row">
-                  <img src={imagePreviewUrl} class="img-fluid" alt="Image Preview"/>
-                </div>
               <div className="form-row pt-3">
                 <button className="btn btn-primary btn-lg">Add Route</button>
               </div>
@@ -340,8 +309,6 @@ export class AddRoute extends Component {
   }
 }
 
-
-export default AddRoute;
 const mapStateToProps = state => ({
   parks: state.parks.parks
 });
