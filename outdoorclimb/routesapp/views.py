@@ -35,6 +35,23 @@ def routes_park_detail(request, pk):
 
 
 @csrf_exempt
+def get_routes_of_park(request):
+    routes = []
+    if request.method == 'POST':
+        request_body = request.body
+        json_string = request_body.decode('utf8')
+        data = json.loads(json_string)
+        query = "SELECT * FROM routesapp_routes r WHERE r.park_name = \'" + \
+            data['parkName'] + '\';'
+        select_query = Routes.objects.raw(query)
+        print(query + " yields " + str(len(select_query)))
+        for row in select_query:
+            routes.append({"routes_id": row.route_id, "route_name": row.route_name, "park_name": row.park_name, "route_location_on_park": row.route_location_on_park,
+                           "description": row.description, "grade": row.grade, "rating": row.rating, "profile_picture": row.profile_picture})
+        return JsonResponse(routes, safe=False)
+
+
+@csrf_exempt
 def add_park(request):
     if request.method == 'POST':
         request_body = request.body

@@ -1,49 +1,68 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getRoutes } from "../../actions/routes";
+import { searchRoutesOfPark } from "../../actions/routes";
 
 export class RoutesBrowser extends Component {
+  state = {
+    parkkey: ""
+  };
   static propTypes = {
     routes: PropTypes.array.isRequired,
-    getRoutes: PropTypes.func.isRequired
+    searchRoutesOfPark: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    const { handle } = this.props.match.params;
-  }
-  constructor(props) {
-    super(props);
-    const { parkkey } = props.location.state;
-  }
-
-  componentDidMount() {
-    this.props.getRoutes();
+    const foo = this.props.location.query.parkkey;
+    this.setState({
+      parkkey: foo
+    });
+    this.props.searchRoutesOfPark(foo);
   }
 
   render() {
-    console.log("Trying");
     return (
-      <h3>{parkkey}</h3>
-      // <div className="card-deck mt-3">
-      //   {this.props.routes.map(route => (
-      //     <div className="col-sm-6 mt-3">
-      //       <div className="card">
-      //         <div className="card-body">
-      //           <h5 className="card-title">Special title treatment</h5>
-      //           <p className="card-text">
-      //             With supporting text below as a natural lead-in to additional
-      //             content.
-      //           </p>
-      //           <a href="#" className="btn btn-primary">
-      //             Go somewhere
-      //           </a>
-      //         </div>
-      //       </div>
-      //     </div>
-      //   ))}
-      // </div>
+      <Fragment>
+        <h2>Routes Found</h2>
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Grade</th>
+              <th>Park</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.routes.map(route => (
+              <tr
+                key={route[0] != null ? route[0].routes_id : "No Routes Found"}
+              >
+                <td>
+                  {route[0] != null ? route[0].route_name : "No Routes Found"}
+                </td>
+                <td>
+                  {route[0] != null ? route[0].route_name : "No Routes Found"}
+                </td>
+                <td>
+                  {route[0] != null ? route[0].park_name : "No Routes Found"}
+                </td>
+                <td>
+                  <button className="btn btn-danger btn-sm">Details</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Fragment>
     );
   }
 }
 
-export default RoutesBrowser;
+//state of redux is mapped to props of this component
+const mapStateToProps = state => ({
+  //Get users reducer and in reducer get state
+  routes: state.routes.routes
+});
+
+export default connect(mapStateToProps, { searchRoutesOfPark })(RoutesBrowser);
