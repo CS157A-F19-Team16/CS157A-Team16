@@ -1,15 +1,22 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { searchRoutes } from "../../actions/routes";
+import Proptypes from "prop-types";
 
-export default class SearchRoutes extends Component {
+export class SearchRoutes extends Component {
   state = {
     boulderingChecked: false,
     sportChecked: false,
     traditionalChecked: false,
     routeName: "",
-    boulderingLower: "",
-    boulderingHigher: "",
-    routeLower: "",
-    routeHigher: ""
+    boulderGradeOne: "",
+    boulderGradeTwo: "",
+    routeGradeOne: "",
+    routeGradeTwo: ""
+  };
+
+  static propTypes = {
+    searchRoutes: Proptypes.func.isRequired
   };
 
   constructor(props) {
@@ -23,8 +30,36 @@ export default class SearchRoutes extends Component {
       [e.target.name]: e.target.checked
     });
 
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
+
   onSubmit() {
-    console.log("Trying to Submit");
+    const {
+      boulderingChecked,
+      sportChecked,
+      traditionalChecked,
+      routeName,
+      boulderGradeOne,
+      boulderGradeTwo,
+      routeGradeOne,
+      routeGradeTwo
+    } = this.state;
+    this.props.searchRoutes(
+      boulderingChecked,
+      sportChecked,
+      traditionalChecked,
+      routeName,
+      boulderGradeOne,
+      boulderGradeTwo,
+      routeGradeOne,
+      routeGradeTwo
+    );
+    this.setState({
+      routeName: "",
+      boulderGradeOne: "",
+      boulderGradeTwo: "",
+      routeGradeOne: "",
+      routeGradeTwo: ""
+    });
   }
   createRouteGrades() {
     let items = [];
@@ -69,12 +104,22 @@ export default class SearchRoutes extends Component {
       <td>
         <div className="col-sm">
           <div className="form-row">
-            <select className="form-control form-control-md">
+            <select
+              className="form-control form-control-md"
+              name="boulderGradeOne"
+              onChange={this.onChange}
+              value={this.state.boulderGradeOne}
+            >
               <option>Grade Level</option>
               {this.createBoulderGrades()}
             </select>
             <p className="pt-3 text-center">to</p>
-            <select className="form-control form-control-md">
+            <select
+              className="form-control form-control-md"
+              name="boulderGradeTwo"
+              onChange={this.onChange}
+              value={this.state.boulderGradeTwo}
+            >
               <option>Grade Level</option>
               {this.createBoulderGrades()}
             </select>
@@ -86,12 +131,22 @@ export default class SearchRoutes extends Component {
       <td>
         <div className="col-sm">
           <div className="form-row">
-            <select className="form-control form-control-md">
+            <select
+              className="form-control form-control-md"
+              name="routeGradeOne"
+              value={this.state.routeGradeOne}
+              onChange={this.onChange}
+            >
               <option>Grade Level</option>
               {this.createRouteGrades()}
             </select>
             <p className="pt-3 text-center">to</p>
-            <select className="form-control form-control-md">
+            <select
+              className="form-control form-control-md"
+              name="routeGradeTwo"
+              value={this.state.routeGradeTwo}
+              onChange={this.onChange}
+            >
               <option>Grade Level</option>
               {this.createRouteGrades()}
             </select>
@@ -188,3 +243,5 @@ export default class SearchRoutes extends Component {
     );
   }
 }
+
+export default connect(null, { searchRoutes })(SearchRoutes);

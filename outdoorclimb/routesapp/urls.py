@@ -21,5 +21,5 @@ urlpatterns = [
     path("routesapp/parks", routes_parks_list, name="routes_parks_list"),
     path("routesapp/parks/<pk>", routes_park_detail, name="routes_parks_detail"),
     path("routesapp/addRoute/", add_route, name="add_route"),
-    path("routesapp/searchRoute/", search_route, name="search_route")
+    path("routesapp/searchRoutes/", search_route, name="search_route")
 ]

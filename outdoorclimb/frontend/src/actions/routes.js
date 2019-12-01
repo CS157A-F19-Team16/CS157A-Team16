@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_ROUTES, ADD_ROUTE_SUCCESS, ADD_ROUTE_FAIL } from "./types";
+import {
+  GET_ROUTES,
+  ADD_ROUTE_SUCCESS,
+  ADD_ROUTE_FAIL,
+  SEARCH_ROUTES_SUCCESS
+} from "./types";
 
 export const getRoutes = () => dispatch => {
   axios
@@ -13,8 +18,43 @@ export const getRoutes = () => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const searchRoute = () => dispatch => {
-  axios.get("/routesapp/searchRoutes");
+export const searchRoutes = (
+  boulderingChecked,
+  sportChecked,
+  traditionalChecked,
+  routeName,
+  boulderGradeOne,
+  boulderGradeTwo,
+  routeGradeOne,
+  routeGradeTwo
+) => dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({
+    boulderingChecked,
+    sportChecked,
+    traditionalChecked,
+    routeName,
+    boulderGradeOne,
+    boulderGradeTwo,
+    routeGradeOne,
+    routeGradeTwo
+  });
+
+  console.log(body);
+  axios
+    .post("/routesapp/searchRoutes/", body, config)
+    .then(res => {
+      dispatch({
+        type: SEARCH_ROUTES_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 export const addRoute = (

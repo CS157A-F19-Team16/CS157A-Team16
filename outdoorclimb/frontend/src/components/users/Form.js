@@ -63,7 +63,4 @@ export class Form extends Component {
   }
 }
 
-export default connect(
-  null,
-  { addUser }
-)(Form);
+export default connect(null, { addUser })(Form);
