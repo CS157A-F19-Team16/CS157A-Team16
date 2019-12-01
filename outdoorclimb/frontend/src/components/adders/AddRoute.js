@@ -3,6 +3,7 @@ import { getParks } from "../../actions/parks";
 import { addRoute } from "../../actions/routes";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import axios from 'axios';
 
 export class AddRoute extends Component {
   state = {
@@ -11,9 +12,12 @@ export class AddRoute extends Component {
     gradeNumber: "",
     gradeLetter: "",
     routeName: "",
-    routeDescription: ""
+    routeDescription: "",
+    file: '',
+    imagePreviewUrl: '',
+    image: null
   };
-
+  
   static propTypes = {
     parks: PropTypes.array.isRequired,
     getParks: PropTypes.func.isRequired,
@@ -32,7 +36,10 @@ export class AddRoute extends Component {
       gradeNumber,
       gradeLetter,
       routeName,
-      routeDescription
+      routeDescription,
+      file,
+      imagePreviewUrl,
+      image
     } = this.state;
     let grade = gradeNumber;
     if (gradeLetter != "") {
@@ -40,21 +47,42 @@ export class AddRoute extends Component {
     }
     if (parkName != "" && routeName != "") {
       console.log(routeType);
-      this.props.addRoute(
-        parkName,
-        routeType,
-        routeName,
-        grade,
-        routeDescription,
-        ""
-      );
+      //save image
+      let form_data = new FormData();
+      form_data.append('image', image, image.name);
+      let url = 'http://localhost:8000/api/posts/';
+      var routeprofile = '';
+      axios.post(url, form_data, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      })
+        .then(res => {
+          console.log(res.data);
+          routeprofile = res.data.image;
+          console.log('url is ' + routeprofile);
+          this.props.addRoute(
+            parkName,
+            routeType,
+            routeName,
+            grade,
+            routeDescription,
+            routeprofile
+          );
+        })
+        .catch(err => console.log(err))
+      //image in post
+
       this.setState({
         parkName: "",
         routeType: "",
         gradeNumber: "",
         gradeLetter: "",
         routeName: "",
-        routeDescription: ""
+        routeDescription: "",
+        file: '',
+        imagePreviewUrl: '',
+        image: ''
       });
     }
   };
@@ -72,6 +100,23 @@ export class AddRoute extends Component {
       }
     }
   };
+
+  handleImageChange(e){
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        image: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+
+    reader.readAsDataURL(file)
+  }
 
   createRouteGrades() {
     let items = [];
@@ -114,6 +159,9 @@ export class AddRoute extends Component {
   }
 
   render() {
+
+    let {imagePreviewUrl} = this.state;
+
     const {
       parkName,
       routeType,
@@ -257,6 +305,7 @@ export class AddRoute extends Component {
                       className="custom-file-input"
                       id="inputGroupFile01"
                       aria-describedby="inputGroupFileAddon01"
+                      onChange={(e)=>this.handleImageChange(e)}
                     />
                     <label
                       className="custom-file-label"
@@ -271,6 +320,9 @@ export class AddRoute extends Component {
                       Please make sure it is a clear and complete photo.
                     </small>
                   </div>
+                </div>
+                <div className="form-row">
+                   <img src={imagePreviewUrl} classname="img-fluid" alt="Image Preview"/>
                 </div>
               </div>
               <div className="form-row pt-3">
