@@ -123,3 +123,7 @@ dmypy.json
 # End of https://www.gitignore.io/api/django
 node_modules
 outdoorclimb/frontend/static/frontend/main.js
+package.json
+package-lock.json
+package-lock.json
+package-lock.json
