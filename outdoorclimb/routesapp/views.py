@@ -38,6 +38,7 @@ def routes_park_detail(request, pk):
         data.append({'name': row.name, 'location': row.location})
     return JsonResponse(data, safe=False)
 
+
 def query_route(request, id):
     route = Routes.objects.raw(
         'SELECT * FROM routesapp_routes WHERE route_id=' + id)
@@ -45,9 +46,10 @@ def query_route(request, id):
     for row in route:
         print(type(row))
         data.append({'route_id': row.route_id, 'route_name': row.route_name, 'park_name': row.park_name,
-        'route_location_on_park': row.route_location_on_park, 'description': row.description, 'grade': row.grade,
-        'rating': row.rating, 'profile_picture': row.profile_picture})
+                     'route_location_on_park': row.route_location_on_park, 'description': row.description, 'grade': row.grade,
+                     'rating': row.rating, 'profile_picture': row.profile_picture})
     return JsonResponse(data, safe=False)
+
 
 @csrf_exempt
 def get_routes_of_park(request):
@@ -131,21 +133,21 @@ def search_route(request):
         print(json_string)
         data = json.loads(json_string)
         routes = []
-        if data['boulderingChecked']:
+        if data['boulderingChecked'] or data['routeName'] != "":
             with connection.cursor() as cursor:
                 routes_query = Routes.objects.raw(
                     create_boulder_query(data['boulderGradeOne'], data['boulderGradeTwo'], data['routeName']))  # Enter proper data
                 for row in routes_query:
                     routes.append({"routes_id": row.route_id, "route_name": row.route_name, "park_name": row.park_name, "route_location_on_park": row.route_location_on_park,
                                    "description": row.description, "grade": row.grade, "rating": row.rating, "profile_picture": row.profile_picture})
-        if data['sportChecked']:
+        if data['sportChecked'] or data['routeName'] != "":
             with connection.cursor() as cursor:
                 routes_query = Routes.objects.raw(
                     create_sport_query(data['routeGradeOne'], data['routeGradeTwo'], data['routeName']))
                 for row in routes_query:
                     routes.append({"routes_id": row.route_id, "route_name": row.route_name, "park_name": row.park_name, "route_location_on_park": row.route_location_on_park,
                                    "description": row.description, "grade": row.grade, "rating": row.rating, "profile_picture": row.profile_picture})
-        if data['traditionalChecked']:
+        if data['traditionalChecked'] or data['routeName'] != "":
             with connection.cursor() as cursor:
                 routes_query = Routes.objects.raw(
                     create_traditional_query(data['routeGradeOne'], data['routeGradeTwo'], data['routeName']))
@@ -156,7 +158,7 @@ def search_route(request):
 
 
 def create_boulder_query(gradeOne, gradeTwo, routeName):
-    boulder_grades = ["V0", "V1", "V2", "V3", "V4", "V5", "V6",
+    boulder_grades = ["", "V0", "V1", "V2", "V3", "V4", "V5", "V6",
                       "V7", "V8", "V9", "V10", "V11", "V12", "V13", "V14", "V15"]
     gradeHigh = gradeTwo
     gradeLow = gradeOne
@@ -165,7 +167,7 @@ def create_boulder_query(gradeOne, gradeTwo, routeName):
         gradeLow = gradeTwo
     append_grades = ""
     for grade in boulder_grades:
-        if boulder_grades.index(gradeLow) <= boulder_grades.index(grade) and boulder_grades.index(gradeHigh) >= boulder_grades.index(grade):
+        if boulder_grades.index(gradeLow) <= boulder_grades.index(grade) and boulder_grades.index(gradeHigh) >= boulder_grades.index(grade) and grade != "":
             where_clause = "OR r.grade=\""+grade + "\" "
             append_grades = append_grades + where_clause
     query = 'SELECT r.* FROM routesapp_routes r, routesapp_boulder_routes WHERE r.route_id = routesapp_boulder_routes.route_id'
@@ -188,7 +190,7 @@ def create_sport_query(gradeOne, gradeTwo, routeName):
         gradeLow = gradeTwo
     append_grades = ""
     for grade in route_grades:
-        if route_grades.index(gradeLow) <= route_grades.index(grade) and route_grades.index(gradeHigh) >= route_grades.index(grade):
+        if route_grades.index(gradeLow) <= route_grades.index(grade) and route_grades.index(gradeHigh) >= route_grades.index(grade) and grade != "":
             where_clause = "OR r.grade=\""+grade + "\" "
             append_grades = append_grades + where_clause
     query = 'SELECT r.* FROM routesapp_routes r, routesapp_sport_routes WHERE r.route_id = routesapp_sport_routes.route_id'
@@ -211,7 +213,7 @@ def create_traditional_query(gradeOne, gradeTwo, routeName):
         gradeLow = gradeTwo
     append_grades = ""
     for grade in route_grades:
-        if route_grades.index(gradeLow) <= route_grades.index(grade) and route_grades.index(gradeHigh) >= route_grades.index(grade):
+        if route_grades.index(gradeLow) <= route_grades.index(grade) and route_grades.index(gradeHigh) >= route_grades.index(grade) and grade != "":
             where_clause = "OR r.grade=\""+grade + "\" "
     query = 'SELECT r.* FROM routesapp_routes r, routesapp_traditional_routes WHERE r.route_id = routesapp_traditional_routes.route_id'
     if routeName != "":
@@ -225,7 +227,7 @@ def create_traditional_query(gradeOne, gradeTwo, routeName):
 
 
 def generate_route_grades():
-    routes_grade = []
+    routes_grade = [""]
     for i in range(2, 17):
         gradeNumber = "5." + str(i)
         if i <= 9:
@@ -236,6 +238,7 @@ def generate_route_grades():
             routes_grade.append(gradeNumber + 'c')
             routes_grade.append(gradeNumber + 'd')
     return routes_grade
+
 
 class PostView(APIView):
     parser_classes = (MultiPartParser, FormParser)

@@ -41,9 +41,7 @@ export class RoutesBrowser extends Component {
                 <td>
                   {route[0] != null ? route[0].route_name : "No Routes Found"}
                 </td>
-                <td>
-                  {route[0] != null ? route[0].route_name : "No Routes Found"}
-                </td>
+                <td>{route[0] != null ? route[0].grade : "No Routes Found"}</td>
                 <td>
                   {route[0] != null ? route[0].park_name : "No Routes Found"}
                 </td>

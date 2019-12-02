@@ -22,11 +22,16 @@ export class RoutesResults extends Component {
           </thead>
           <tbody>
             {this.props.routes.map(route => (
-              <tr key={route[0].routes_id}>
-                {console.log(route[0])}
-                <td>{route[0].route_name}</td>
-                <td>{route[0].grade}</td>
-                <td>{route[0].park_name}</td>
+              <tr
+                key={route[0] != null ? route[0].routes_id : "No Routes Found"}
+              >
+                <td>
+                  {route[0] != null ? route[0].route_name : "No Routes Found"}
+                </td>
+                <td>{route[0] != null ? route[0].grade : "No Routes Found"}</td>
+                <td>
+                  {route[0] != null ? route[0].park_name : "No Routes Found"}
+                </td>
                 <td>
                   <button className="btn btn-danger btn-sm">Details</button>
                 </td>
