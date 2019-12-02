@@ -44,7 +44,7 @@ def query_route(request):
     request_body = request.body
     json_string = request_body.decode('utf8')
     data = json.loads(json_string)
-    print("ROUTE ID: " + data['route_id'])
+    print("ROUTE ID: " + str(data['route_id']))
     route = Routes.objects.raw(
         'SELECT * FROM routesapp_routes WHERE route_id=\'' + data['route_id'] + "\';")
     route_type = find_route_type(data['route_id'])
