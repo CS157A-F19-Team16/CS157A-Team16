@@ -1,13 +1,12 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { getSingleRoute } from "../../actions/route";
+import { getSingleRoute, getRouteType } from "../../actions/route";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 export class RoutesViewer extends Component {
   state = {
-    route_id: "",
-    route: null
+    route_id: ""
   };
 
   static propTypes = {
@@ -15,7 +14,7 @@ export class RoutesViewer extends Component {
   };
 
   componentDidMount() {
-    const foo = this.props.location.query.route_id;
+    const foo = this.props.location.query.routes_id;
     this.setState({
       route_id: foo
     });
@@ -23,6 +22,9 @@ export class RoutesViewer extends Component {
   }
 
   render() {
+    if (this.props.route != null) {
+      console.log(this.props.route[0].route_name);
+    }
     return (
       <div>
         <form className="py-5">
@@ -41,7 +43,11 @@ export class RoutesViewer extends Component {
                 </div>
                 <div className="form-row">
                   <div className="col-md-7 form-group form-large">
-                    <label>Placeholder{/*Figure out route type*/}</label>
+                    <label>
+                      {this.props.route != null
+                        ? this.props.route[0].route_type
+                        : "Route Not Found"}
+                    </label>
                   </div>
                 </div>
                 <div className="form-row">
@@ -53,7 +59,11 @@ export class RoutesViewer extends Component {
                 </div>
                 <div className="form-row">
                   <div className="col-md-7 form-group form-large">
-                    <label>Placeholder{this.props.route[0].route_name}</label>
+                    <label>
+                      {this.props.route != null
+                        ? this.props.route[0].route_name
+                        : "Route Not Found"}
+                    </label>
                   </div>
                 </div>
                 <div className="form-row">
@@ -65,7 +75,11 @@ export class RoutesViewer extends Component {
                 </div>
                 <div className="form-row">
                   <div className="col-md-7 form-group form-large">
-                    <label>{this.props.route[0].grade}</label>
+                    <label>
+                      {this.props.route != null
+                        ? this.props.route[0].grade
+                        : "Route Not Found"}
+                    </label>
                   </div>
                 </div>
                 <div className="form-row">
@@ -81,7 +95,11 @@ export class RoutesViewer extends Component {
                     id="routeDescription"
                     rows="10"
                     readOnly
-                    value={this.props.route[0].description}
+                    value={
+                      this.props.route != null
+                        ? this.props.route[0].description
+                        : "Route Not Found"
+                    }
                   ></textarea>
                 </div>
               </div>

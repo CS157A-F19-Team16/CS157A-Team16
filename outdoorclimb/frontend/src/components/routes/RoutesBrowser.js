@@ -45,9 +45,10 @@ export class RoutesBrowser extends Component {
                     {
                       <Link
                         to={{
-                          pathname: "/routesviewer",
-                          query: route.routes_id
+                          pathname: "/routesviewer/",
+                          query: { routes_id: route.routes_id }
                         }}
+                        className="nav-link"
                       >
                         <button className="btn btn-danger btn-sm">
                           Details

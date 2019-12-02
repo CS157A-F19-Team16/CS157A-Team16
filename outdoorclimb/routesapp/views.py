@@ -39,15 +39,43 @@ def routes_park_detail(request, pk):
     return JsonResponse(data, safe=False)
 
 
-def query_route(request, id):
+@csrf_exempt
+def query_route(request):
+    request_body = request.body
+    json_string = request_body.decode('utf8')
+    data = json.loads(json_string)
+    print("ROUTE ID: " + data['route_id'])
     route = Routes.objects.raw(
-        'SELECT * FROM routesapp_routes WHERE route_id=\'' + id + "\';")
-    data = []
+        'SELECT * FROM routesapp_routes WHERE route_id=\'' + data['route_id'] + "\';")
+    route_type = find_route_type(data['route_id'])
+    print(route_type)
+    return_data = []
     for row in route:
-        data.append({'route_id': row.route_id, 'route_name': row.route_name, 'park_name': row.park_name,
-                     'route_location_on_park': row.route_location_on_park, 'description': row.description, 'grade': row.grade,
-                     'rating': row.rating, 'profile_picture': row.profile_picture})
-    return JsonResponse(data, safe=False)
+        return_data.append({'route_id': row.route_id, 'route_name': row.route_name, 'park_name': row.park_name,
+                            'route_location_on_park': row.route_location_on_park, 'description': row.description, 'grade': row.grade,
+                            'rating': row.rating, 'profile_picture': row.profile_picture, 'route_type': route_type})
+    return JsonResponse(return_data, safe=False)
+
+
+def find_route_type(route_id):
+    print(route_id)
+    routeAmount = len(Routes.objects.raw(
+        'SELECT * FROM routesapp_boulder_routes WHERE route_id=\'' + route_id + "\';"))
+    routeType = ""
+    if routeAmount == 0:
+        routeAmount = len(Routes.objects.raw(
+            'SELECT * FROM routesapp_sport_routes WHERE route_id=\'' + route_id + "\';"))
+        if routeAmount == 0:
+            routeAmount = len(Routes.objects.raw(
+                'SELECT * FROM routesapp_traditional_routes WHERE route_id=\'' + route_id + "\';"))
+            if routeAmount == 1:
+                routeType = "Traditional"
+        else:
+            routeType = "Sport"
+    else:
+        routeType = "Bouldering"
+    print(routeAmount)
+    return routeType
 
 
 @csrf_exempt

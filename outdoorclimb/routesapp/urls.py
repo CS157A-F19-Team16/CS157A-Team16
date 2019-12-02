@@ -24,6 +24,6 @@ urlpatterns = [
     path("routesapp/searchRoutesInPark/",
          get_routes_of_park, name="get_routes_of_park"),
     path("routesapp/searchRoutes/", search_route, name="search_route"),
-    path("routesapp/singleRoute/<id>", query_route, name="query_route"),
+    path("routesapp/singleRoute/", query_route, name="query_route"),
     path('posts/', PostView.as_view(), name='posts_list')
 ]
