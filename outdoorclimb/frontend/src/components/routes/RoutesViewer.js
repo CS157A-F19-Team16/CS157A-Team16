@@ -22,8 +22,9 @@ export class RoutesViewer extends Component {
   }
 
   render() {
+    //TODO: Display this link
     if (this.props.route != null) {
-      console.log(this.props.route[0].route_name);
+      console.log(this.props.route[0].profile_picture);
     }
     return (
       <div>
@@ -105,7 +106,11 @@ export class RoutesViewer extends Component {
               </div>
               <div className="col-sm">
                 <div className="form-row">
-                  <label>Route profile picture Put Picture Here</label>
+                  <label>
+                    {this.props.route != null
+                      ? this.props.route[0].profile_picture
+                      : "Route Not Found"}
+                  </label>
                 </div>
               </div>
             </div>
