@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Link, Redirect } from "react-router-dom";
 import { searchRoutesOfPark } from "../../actions/routes";
 
 export class RoutesBrowser extends Component {
@@ -34,22 +35,36 @@ export class RoutesBrowser extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.routes.map(route => (
-              <tr
-                key={route[0] != null ? route[0].routes_id : "No Routes Found"}
-              >
-                <td>
-                  {route[0] != null ? route[0].route_name : "No Routes Found"}
-                </td>
-                <td>{route[0] != null ? route[0].grade : "No Routes Found"}</td>
-                <td>
-                  {route[0] != null ? route[0].park_name : "No Routes Found"}
-                </td>
-                <td>
-                  <button className="btn btn-danger btn-sm">Details</button>
-                </td>
+            {this.props.routes[0] != null ? (
+              this.props.routes[0].map(route => (
+                <tr key={route.routes_id}>
+                  <td>{route.route_name}</td>
+                  <td>{route.grade}</td>
+                  <td>{route.park_name}</td>
+                  <td>
+                    {
+                      <Link
+                        to={{
+                          pathname: "/routesviewer",
+                          query: route.routes_id
+                        }}
+                      >
+                        <button className="btn btn-danger btn-sm">
+                          Details
+                        </button>
+                      </Link>
+                    }
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr key="NoRoute">
+                <td>{"No Routes"}</td>
+                <td>{"No Routes"}</td>
+                <td>{"No Routes"}</td>
+                <td>{"No Routes"}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </Fragment>

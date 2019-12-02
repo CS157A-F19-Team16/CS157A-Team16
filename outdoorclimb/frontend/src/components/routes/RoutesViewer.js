@@ -1,34 +1,41 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { getSingleRoute } from "../../actions/singleroute";
+import { getSingleRoute } from "../../actions/route";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 export class RoutesViewer extends Component {
+  state = {
+    route_id: "",
+    route: null
+  };
 
-    /**
-     * Need to somehow get which route is being viewed and determine type of route
-     */
-    static propTypes = {
-      route: PropTypes.array.isRequired,
-      getSingleParks: PropTypes.func.isRequired
-    };
+  static propTypes = {
+    getSingleRoute: PropTypes.func.isRequired
+  };
 
-    componentDidMount() {
-      this.props.getSingleParks(1);
-    }
+  componentDidMount() {
+    const foo = this.props.location.query.route_id;
+    this.setState({
+      route_id: foo
+    });
+    this.props.getSingleRoute(foo);
+  }
 
-    render() {
-        return (
-        <div>
+  render() {
+    return (
+      <div>
         <form className="py-5">
           <div className="container">
             <div className="row">
               <div className="col-sm">
                 <div className="form-row">
                   <div className="col-md-7 form-group form-large">
-                    <label style={{fontSize: '30px'}} htmlFor="routeTypeSelect">
-                        Route Type:
+                    <label
+                      style={{ fontSize: "30px" }}
+                      htmlFor="routeTypeSelect"
+                    >
+                      Route Type:
                     </label>
                   </div>
                 </div>
@@ -39,32 +46,42 @@ export class RoutesViewer extends Component {
                 </div>
                 <div className="form-row">
                   <div className="col-md-7 form-group form-large">
-                    <label style={{fontSize: '30px'}} htmlFor="Route Name">Route Name:</label>
+                    <label style={{ fontSize: "30px" }} htmlFor="Route Name">
+                      Route Name:
+                    </label>
                   </div>
                 </div>
                 <div className="form-row">
                   <div className="col-md-7 form-group form-large">
-                    <label>Placeholder{/*{route.name}*/}</label>
+                    <label>Placeholder{this.props.route[0].route_name}</label>
                   </div>
                 </div>
                 <div className="form-row">
                   <div className="col-md-7 form-group form-large">
-                    <label style={{fontSize: '30px'}} htmlFor="Route Name">Grade</label>
+                    <label style={{ fontSize: "30px" }} htmlFor="Route Name">
+                      Grade
+                    </label>
                   </div>
                 </div>
                 <div className="form-row">
                   <div className="col-md-7 form-group form-large">
-                    <label>Placeholder{/*Figure out type of route and then put grade info*/}</label>
+                    <label>{this.props.route[0].grade}</label>
                   </div>
                 </div>
                 <div className="form-row">
-                  <label style={{fontSize: '30px'}} htmlFor="routeDescription">Route Description</label>
+                  <label
+                    style={{ fontSize: "30px" }}
+                    htmlFor="routeDescription"
+                  >
+                    Route Description
+                  </label>
                   <textarea
                     /*Fill this area with the route in question's description */
                     className="form-control"
                     id="routeDescription"
                     rows="10"
-                    readOnly value="Description"
+                    readOnly
+                    value={this.props.route[0].description}
                   ></textarea>
                 </div>
               </div>
@@ -76,16 +93,13 @@ export class RoutesViewer extends Component {
             </div>
           </div>
         </form>
-        </div>
-        )
-    }
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
-  route: state.route.singleroute
+  route: state.route.route
 });
 
-export default connect(
-  mapStateToProps,
-  { getSingleRoute }
-)(RoutesViewer);
+export default connect(mapStateToProps, { getSingleRoute })(RoutesViewer);

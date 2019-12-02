@@ -41,10 +41,9 @@ def routes_park_detail(request, pk):
 
 def query_route(request, id):
     route = Routes.objects.raw(
-        'SELECT * FROM routesapp_routes WHERE route_id=' + id)
+        'SELECT * FROM routesapp_routes WHERE route_id=\'' + id + "\';")
     data = []
     for row in route:
-        print(type(row))
         data.append({'route_id': row.route_id, 'route_name': row.route_name, 'park_name': row.park_name,
                      'route_location_on_park': row.route_location_on_park, 'description': row.description, 'grade': row.grade,
                      'rating': row.rating, 'profile_picture': row.profile_picture})

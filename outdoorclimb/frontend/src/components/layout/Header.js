@@ -31,11 +31,6 @@ export class Header extends Component {
     const userLinks = (
       <ul className="navbar-nav mc-auto">
         <li className="navitem">
-          <Link to="/routesbrowse" className="nav-link">
-            Browse Routes
-          </Link>
-        </li>
-        <li className="navitem">
           <Link to="/parksbrowse" className="nav-link">
             Browse Parks
           </Link>
