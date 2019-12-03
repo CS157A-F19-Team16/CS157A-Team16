@@ -22,17 +22,17 @@ class Rocks(models.Model):
 
 
 class Routes(models.Model):
-    route_id = models.CharField(max_length=64)
-    rock_name = models.CharField(max_length=100)
+    route_id = models.CharField(max_length=64, primary_key=True)
+    route_name = models.CharField(max_length=100)
     park_name = models.CharField(max_length=100)
     route_location_on_park = models.CharField(max_length=2000)
     description = models.CharField(max_length=2000)
     grade = models.CharField(max_length=5)
     rating = models.DecimalField(decimal_places=1, max_digits=2)
-    profile_picture = models.ImageField()
+    profile_picture = models.CharField(max_length=1000)
 
     class Meta:
-        unique_together = [['route_id', 'rock_name', 'park_name']]
+        unique_together = [['route_id', 'route_name', 'park_name']]
 
 
 class Boulder_Routes(models.Model):
@@ -70,3 +70,6 @@ class Pitches(models.Model):
 
     class Meta:
         unique_together = [['route_id', 'pitch_number']]
+
+class Post(models.Model):
+    image = models.ImageField(upload_to='post_images')

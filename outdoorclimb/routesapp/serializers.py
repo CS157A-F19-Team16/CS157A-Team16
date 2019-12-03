@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from routesapp.models import Parks, Rocks, Routes, Boulder_Routes, Sport_Routes, Traditional_Routes, Pictures_of_Routes, Pitches
+from routesapp.models import Parks, Rocks, Routes, Boulder_Routes, Sport_Routes, Traditional_Routes, Pictures_of_Routes, Pitches, Post
 
 
 class ParksSerializer(serializers.ModelSerializer):  # Create serialzer
@@ -49,4 +49,9 @@ class Pictures_of_RoutesSerializer(serializers.ModelSerializer):
 class PitchesSerializer(serializers.ModelSerializer):  # Create serialzer
     class Meta:
         model = Pitches
+        fields = '__all__'
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
         fields = '__all__'
