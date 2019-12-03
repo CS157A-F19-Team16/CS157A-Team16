@@ -11,7 +11,7 @@ export class RoutesResults extends Component {
   render() {
     return (
       <Fragment>
-        <h2>Routes Found</h2>
+        <h2>Routes Found and Some Looked At Recently</h2>
         <table className="table table-striped">
           <thead>
             <tr>

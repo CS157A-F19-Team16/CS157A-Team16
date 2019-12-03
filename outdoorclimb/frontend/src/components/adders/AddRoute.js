@@ -252,13 +252,13 @@ export class AddRoute extends Component {
                     What Type of Route Have You Discovered
                   </label>
                   <select
-                    className="custom-select col-md-5"
+                    className="custom-select col-md-7"
                     id="routeTypeSelect"
                     name="routeType"
                     onChange={this.onChange}
                     value={this.state.routeType}
                   >
-                    <option defaultValue="Choose a type">Choose a type</option>
+                    <option defaultValue="Choose...">Choose a type</option>
                     <option value="sport">Sport</option>
                     <option value="bouldering">Bouldering</option>
                     <option value="traditional">Traditional</option>

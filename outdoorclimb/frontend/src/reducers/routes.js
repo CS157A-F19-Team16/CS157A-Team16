@@ -2,7 +2,11 @@
 import {
   ADD_ROUTE_SUCCESS,
   ADD_ROUTE_FAIL,
-  SEARCH_ROUTES_SUCCESS
+  SEARCH_ROUTES_SUCCESS,
+  LOGIN_SUCCESS,
+  EXPLORER_REGISTER_SUCCESS,
+  EXPLORER_LOGIN_SUCCESS,
+  REGISTER_SUCCESS
 } from "../actions/types.js";
 
 const initialState = {
@@ -23,6 +27,15 @@ export default function(state = initialState, action) {
         ...state,
         routes: [action.payload]
       };
+    case LOGIN_SUCCESS:
+    case EXPLORER_REGISTER_SUCCESS:
+    case EXPLORER_LOGIN_SUCCESS:
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        routes: []
+      };
+
     default:
       return state;
   }
