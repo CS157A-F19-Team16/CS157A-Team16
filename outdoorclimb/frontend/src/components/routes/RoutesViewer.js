@@ -118,7 +118,7 @@ export class RoutesViewer extends Component {
                       alt="Route Not Found"
                     />
                   ) : (
-                    <p>No Routes</p>
+                    <p>Image Not Found</p>
                   )}
                 </div>
               </div>
