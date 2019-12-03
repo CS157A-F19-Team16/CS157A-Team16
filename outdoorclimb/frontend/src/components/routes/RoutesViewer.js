@@ -114,7 +114,7 @@ export class RoutesViewer extends Component {
                         "/static/" +
                         this.props.route[0].profile_picture.substring(7)
                       }
-                      classname="img-fluid"
+                      className="img-fluid"
                       alt="Route Not Found"
                     />
                   ) : (
