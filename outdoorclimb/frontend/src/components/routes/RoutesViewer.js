@@ -106,11 +106,7 @@ export class RoutesViewer extends Component {
               </div>
               <div className="col-sm">
                 <div className="form-row">
-                  <label>
-                    {this.props.route != null
-                      ? this.props.route[0].profile_picture
-                      : "Route Not Found"}
-                  </label>
+                   <img src={"/static/" + this.props.route[0].profile_picture.substring(7)} classname="img-fluid" alt="Route Not Found"/>
                 </div>
               </div>
             </div>
