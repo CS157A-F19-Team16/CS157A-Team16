@@ -4,19 +4,19 @@ import { getSingleRoute } from "../../actions/singleroute";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-export class RoutesViewer extends Component {
+export default class RoutesViewer extends Component {
 
     /**
      * Need to somehow get which route is being viewed and determine type of route
      */
-    static propTypes = {
-      route: PropTypes.array.isRequired,
-      getSingleParks: PropTypes.func.isRequired
-    };
+    // static propTypes = {
+    //   route: PropTypes.array.isRequired,
+    //   getSingleParks: PropTypes.func.isRequired
+    // };
 
-    componentDidMount() {
-      this.props.getSingleParks(1);
-    }
+    // componentDidMount() {
+    //   this.props.getSingleParks(1);
+    // }
 
     render() {
         return (
@@ -70,7 +70,7 @@ export class RoutesViewer extends Component {
               </div>
               <div className="col-sm">
                 <div className="form-row">
-                  <label>Route profile picture Put Picture Here</label>
+                   {/* <img src={"/static/" + pathname.substring(7)} classname="img-fluid" alt="Image Preview"/> */}
                 </div>
               </div>
             </div>
@@ -81,11 +81,11 @@ export class RoutesViewer extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-  route: state.route.singleroute
-});
+// const mapStateToProps = state => ({
+//   route: state.route.singleroute
+// });
 
-export default connect(
-  mapStateToProps,
-  { getSingleRoute }
-)(RoutesViewer);
+// export default connect(
+//   mapStateToProps,
+//   { getSingleRoute }
+// )(RoutesViewer);

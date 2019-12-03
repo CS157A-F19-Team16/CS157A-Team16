@@ -114,7 +114,6 @@ export class AddRoute extends Component {
         imagePreviewUrl: reader.result
       });
     }
-
     reader.readAsDataURL(file)
   }
 
@@ -161,6 +160,7 @@ export class AddRoute extends Component {
   render() {
 
     let {imagePreviewUrl} = this.state;
+    console.log(this.state.imagePreviewUrl);
 
     const {
       parkName,
