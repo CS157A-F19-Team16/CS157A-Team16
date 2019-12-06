@@ -129,6 +129,8 @@ def add_route(request):
             elif route_type == 'sport':
                 cursor.execute('INSERT INTO routesapp_sport_routes VALUES(\'' +
                                route_id + '\',\'' + blank + '\',%s);', [0])
+            else:
+                print("ERROR: Did not add this route to any other tables")
         return JsonResponse(data, safe=False)
 
 

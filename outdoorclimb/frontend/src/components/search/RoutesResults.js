@@ -11,7 +11,7 @@ export class RoutesResults extends Component {
   render() {
     return (
       <Fragment>
-        <h2>Routes Found</h2>
+        <h2>Routes Found and Some Looked At Recently</h2>
         <table className="table table-striped">
           <thead>
             <tr>
@@ -22,7 +22,7 @@ export class RoutesResults extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.routes[0] != null ? (
+            {this.props.routes[0] != null && this.props.routes[0].length > 0 ? (
               this.props.routes[0].map(route => (
                 <tr key={route.routes_id}>
                   <td>{route.route_name}</td>

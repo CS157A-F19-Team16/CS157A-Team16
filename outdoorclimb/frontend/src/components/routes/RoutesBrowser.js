@@ -35,7 +35,7 @@ export class RoutesBrowser extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.routes[0] != null ? (
+            {this.props.routes[0] != null && this.props.routes[0].length > 0 ? (
               this.props.routes[0].map(route => (
                 <tr key={route.routes_id}>
                   <td>{route.route_name}</td>

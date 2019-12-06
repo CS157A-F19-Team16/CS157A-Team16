@@ -45,8 +45,8 @@ export class AddRoute extends Component {
     if (gradeLetter != "") {
       grade += gradeLetter;
     }
-    if (parkName != "" && routeName != "") {
-      console.log(routeType);
+    console.log("Route Type: " + routeType);
+    if (parkName != "" && routeName != "" && routeType != "") {
       //save image
       let form_data = new FormData();
       form_data.append("image", image, image.name);
@@ -85,6 +85,8 @@ export class AddRoute extends Component {
         imagePreviewUrl: "",
         image: ""
       });
+    } else {
+      console.log("ERROR: Did not add anything");
     }
   };
 
@@ -94,12 +96,12 @@ export class AddRoute extends Component {
     });
 
   routeTypeChange = e => {
-    var options = e.target.options;
-    for (var i = 0, l = options.length; i < l; i++) {
-      if (options[i].selected) {
-        this.setState({ routeType: options[i].value });
-      }
-    }
+    console.log("Route type has changed");
+    var option = e.target.value;
+    this.setState({
+      routeType: option
+    });
+    console.log("It is now" + this.state.routeType);
   };
 
   handleImageChange(e) {
@@ -250,12 +252,13 @@ export class AddRoute extends Component {
                     What Type of Route Have You Discovered
                   </label>
                   <select
-                    className="custom-select col-md-5"
+                    className="custom-select col-md-7"
                     id="routeTypeSelect"
                     name="routeType"
-                    onChange={this.routeTypeChange}
-                    value={routeType}
+                    onChange={this.onChange}
+                    value={this.state.routeType}
                   >
+                    <option defaultValue="Choose...">Choose a type</option>
                     <option value="sport">Sport</option>
                     <option value="bouldering">Bouldering</option>
                     <option value="traditional">Traditional</option>
