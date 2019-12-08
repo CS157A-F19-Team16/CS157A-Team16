@@ -45,9 +45,30 @@ export const searchRoutes = (
     routeGradeTwo
   });
 
-  console.log(body);
   axios
     .post("/routesapp/searchRoutes/", body, config)
+    .then(res => {
+      dispatch({
+        type: SEARCH_ROUTES_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+export const searchRoutesOfPark = parkName => dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({
+    parkName
+  });
+
+  axios
+    .post("/routesapp/searchRoutesInPark/", body, config)
     .then(res => {
       dispatch({
         type: SEARCH_ROUTES_SUCCESS,

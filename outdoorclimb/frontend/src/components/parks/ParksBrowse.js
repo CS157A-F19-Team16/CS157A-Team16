@@ -24,7 +24,7 @@ export class ParksBrowse extends Component {
                 <Link
                   to={{
                     pathname: "/routesbrowser",
-                    state: { parkkey: park.name }
+                    query: { parkkey: park.name }
                   }}
                   className="nav-link"
                 >
@@ -52,7 +52,4 @@ const mapStateToProps = state => ({
   parks: state.parks.parks
 });
 
-export default connect(
-  mapStateToProps,
-  { getParks }
-)(ParksBrowse);
+export default connect(mapStateToProps, { getParks })(ParksBrowse);

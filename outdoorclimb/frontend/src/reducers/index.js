@@ -6,6 +6,7 @@ import auth from "./auth";
 import messages from "./messages";
 import parks from "./parks";
 import routes from "./routes";
+import route from "./route";
 
 export default combineReducers({
   users,
@@ -13,5 +14,6 @@ export default combineReducers({
   auth,
   messages,
   parks,
-  routes
+  routes,
+  route
 });

@@ -138,7 +138,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    #This lets Django's collectstatic store our bundles
+    #need to have static url for django
     os.path.join(BASE_DIR, 'media'),  
 )
 

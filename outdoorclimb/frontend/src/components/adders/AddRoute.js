@@ -3,7 +3,7 @@ import { getParks } from "../../actions/parks";
 import { addRoute } from "../../actions/routes";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import axios from 'axios';
+import axios from "axios";
 
 export class AddRoute extends Component {
   state = {
@@ -13,11 +13,11 @@ export class AddRoute extends Component {
     gradeLetter: "",
     routeName: "",
     routeDescription: "",
-    file: '',
-    imagePreviewUrl: '',
+    file: "",
+    imagePreviewUrl: "",
     image: null
   };
-  
+
   static propTypes = {
     parks: PropTypes.array.isRequired,
     getParks: PropTypes.func.isRequired,
@@ -45,22 +45,23 @@ export class AddRoute extends Component {
     if (gradeLetter != "") {
       grade += gradeLetter;
     }
-    if (parkName != "" && routeName != "") {
-      console.log(routeType);
+    console.log("Route Type: " + routeType);
+    if (parkName != "" && routeName != "" && routeType != "") {
       //save image
       let form_data = new FormData();
-      form_data.append('image', image, image.name);
-      let url = 'http://localhost:8000/api/posts/';
-      var routeprofile = '';
-      axios.post(url, form_data, {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      })
+      form_data.append("image", image, image.name);
+      let url = "http://localhost:8000/api/posts/";
+      var routeprofile = "";
+      axios
+        .post(url, form_data, {
+          headers: {
+            "content-type": "multipart/form-data"
+          }
+        })
         .then(res => {
           console.log(res.data);
           routeprofile = res.data.image;
-          console.log('url is ' + routeprofile);
+          console.log("url is " + routeprofile);
           this.props.addRoute(
             parkName,
             routeType,
@@ -70,7 +71,7 @@ export class AddRoute extends Component {
             routeprofile
           );
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
       //image in post
 
       this.setState({
@@ -80,10 +81,12 @@ export class AddRoute extends Component {
         gradeLetter: "",
         routeName: "",
         routeDescription: "",
-        file: '',
-        imagePreviewUrl: '',
-        image: ''
+        file: "",
+        imagePreviewUrl: "",
+        image: ""
       });
+    } else {
+      console.log("ERROR: Did not add anything");
     }
   };
 
@@ -93,15 +96,15 @@ export class AddRoute extends Component {
     });
 
   routeTypeChange = e => {
-    var options = e.target.options;
-    for (var i = 0, l = options.length; i < l; i++) {
-      if (options[i].selected) {
-        this.setState({ routeType: options[i].value });
-      }
-    }
+    console.log("Route type has changed");
+    var option = e.target.value;
+    this.setState({
+      routeType: option
+    });
+    console.log("It is now" + this.state.routeType);
   };
 
-  handleImageChange(e){
+  handleImageChange(e) {
     e.preventDefault();
 
     let reader = new FileReader();
@@ -113,8 +116,9 @@ export class AddRoute extends Component {
         image: file,
         imagePreviewUrl: reader.result
       });
-    }
-    reader.readAsDataURL(file)
+    };
+
+    reader.readAsDataURL(file);
   }
 
   createRouteGrades() {
@@ -158,9 +162,7 @@ export class AddRoute extends Component {
   }
 
   render() {
-
-    let {imagePreviewUrl} = this.state;
-    console.log(this.state.imagePreviewUrl);
+    let { imagePreviewUrl } = this.state;
 
     const {
       parkName,
@@ -250,12 +252,13 @@ export class AddRoute extends Component {
                     What Type of Route Have You Discovered
                   </label>
                   <select
-                    className="custom-select col-md-5"
+                    className="custom-select col-md-7"
                     id="routeTypeSelect"
                     name="routeType"
-                    onChange={this.routeTypeChange}
-                    value={routeType}
+                    onChange={this.onChange}
+                    value={this.state.routeType}
                   >
+                    <option defaultValue="Choose...">Choose a type</option>
                     <option value="sport">Sport</option>
                     <option value="bouldering">Bouldering</option>
                     <option value="traditional">Traditional</option>
@@ -305,7 +308,7 @@ export class AddRoute extends Component {
                       className="custom-file-input"
                       id="inputGroupFile01"
                       aria-describedby="inputGroupFileAddon01"
-                      onChange={(e)=>this.handleImageChange(e)}
+                      onChange={e => this.handleImageChange(e)}
                     />
                     <label
                       className="custom-file-label"
@@ -322,7 +325,11 @@ export class AddRoute extends Component {
                   </div>
                 </div>
                 <div className="form-row">
-                   <img src={imagePreviewUrl} classname="img-fluid" alt="Image Preview"/>
+                  <img
+                    src={imagePreviewUrl}
+                    className="img-fluid"
+                    alt="Image Preview"
+                  />
                 </div>
               </div>
               <div className="form-row pt-3">

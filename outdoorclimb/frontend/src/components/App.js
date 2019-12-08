@@ -21,7 +21,6 @@ import PrivateRoute from "./common/PrivateRoute";
 import AddRoute from "./adders/AddRoute";
 import RoutesViewer from "./routes/RoutesViewer";
 import RoutesTest from "./routes/RoutesTest";
-
 import AddPark from "./adders/AddPark";
 import { Provider } from "react-redux";
 import store from "../store";
@@ -49,9 +48,17 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <Route exact path="/routesviewer" component={RoutesViewer} />
-                  <Route exact path="/addroute" component={AddRoute} />
-                  <Route exact path="/routestest" component={RoutesTest} />
+                  <PrivateRoute
+                    exact
+                    path="/routesviewer"
+                    component={RoutesViewer}
+                  />
+                  <PrivateRoute exact path="/addroute" component={AddRoute} />
+                  <PrivateRoute
+                    exact
+                    path="/routestest"
+                    component={RoutesTest}
+                  />
                   <PrivateRoute exact path="/addroute" component={AddRoute} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
@@ -72,14 +79,18 @@ class App extends Component {
                     component={RoutesBrowser}
                   />
                   <Route exact path="/register" component={Register} />
-                  <Route exact path="/parksbrowse" component={ParksBrowse} />
+                  <PrivateRoute
+                    exact
+                    path="/parksbrowse"
+                    component={ParksBrowse}
+                  />
                   <PrivateRoute exact path="/" component={Dashboard} />
                   <PrivateRoute
                     exact
                     path="/parksbrowse"
                     component={ParksBrowse}
                   />
-                  <Route exact path="/" component={Dashboard} />
+                  <PrivateRoute exact path="/" component={Dashboard} />
                 </Switch>
               </div>
             </Fragment>
