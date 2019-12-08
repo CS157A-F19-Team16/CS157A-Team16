@@ -64,7 +64,6 @@ export const login = (username, password) => dispatch => {
 };
 
 export const explorerLogin = () => dispatch => {
-  console.log("Trying to dispatch");
   dispatch({
     type: EXPLORER_LOGIN_SUCCESS
   });
@@ -102,7 +101,6 @@ export const explorerRegister = (
       });
     })
     .catch(err => {
-      console.log(err);
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: EXPLORER_REGISTER_FAIL
@@ -122,8 +120,6 @@ export const register = (username, password, email) => dispatch => {
     email,
     password
   });
-
-  console.log(body);
 
   axios
     .post("/api/auth/register", body, config)
