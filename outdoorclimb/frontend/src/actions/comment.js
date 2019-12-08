@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ADD_COMMENT_FAIL, ADD_COMMENT_SUCCESS } from "./types";
 
-export const addComment = (commentText, email, routeId) => dispatch => {
+export const addComment = (email, routeId, commentText) => {
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -25,6 +25,7 @@ export const addComment = (commentText, email, routeId) => dispatch => {
       });
     })
     .catch(err => {
+      console.log(err);
       dispatch({
         type: ADD_COMMENT_FAIL
       });

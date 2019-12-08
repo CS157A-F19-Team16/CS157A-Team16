@@ -7,7 +7,8 @@ import { addComment } from "../../actions/comment";
 export class CommentInput extends Component {
   static propTypes = {
     routeId: PropTypes.string.isRequired,
-    addComment: PropTypes.func.isRequired
+    addComment: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired
   };
 
   state = {
