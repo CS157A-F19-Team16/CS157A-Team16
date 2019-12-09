@@ -48,7 +48,7 @@ export class Users extends Component {
   }
 }
 
-//state of redux is mapped to props of this component
+//state of redux is mapped to props of component
 const mapStateToProps = state => ({
   //Get users reducer and in reducer get state
   users: state.users.users
