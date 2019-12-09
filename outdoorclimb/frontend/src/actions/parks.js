@@ -16,6 +16,7 @@ export const getParks = () => dispatch => {
       });
     })
     .catch(function(error) {
+      console.log(error.config);
       dispatch({
         type: GET_PARKS_FAILURE
       });

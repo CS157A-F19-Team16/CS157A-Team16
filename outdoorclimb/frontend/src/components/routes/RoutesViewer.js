@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { getSingleRoute, getRouteType } from "../../actions/route";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { Comments } from "../comments/Comments";
+import { addComment } from "../../actions/comment";
 
 export class RoutesViewer extends Component {
   state = {
@@ -10,7 +12,9 @@ export class RoutesViewer extends Component {
   };
 
   static propTypes = {
-    getSingleRoute: PropTypes.func.isRequired
+    getSingleRoute: PropTypes.func.isRequired,
+    addComment: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired
   };
 
   componentDidMount() {
@@ -23,11 +27,6 @@ export class RoutesViewer extends Component {
 
   render() {
     //TODO: Display this link
-    if (this.props.route != null) {
-      console.log(this.props.route[0].profile_picture);
-    } else {
-      console.log("Route is not null");
-    }
     return (
       <div>
         <form className="py-5">
@@ -126,36 +125,11 @@ export class RoutesViewer extends Component {
             <div>
               <div className="card card-body mt-5">
                 <div className="row">
-                  <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-0">Media heading</h5>
-                      Cras sit amet nibh libero, in gravida nulla. Nulla vel
-                      metus scelerisque ante sollicitudin. Cras purus odio,
-                      vestibulum in vulputate at, tempus viverra turpis. Fusce
-                      condimentum nunc ac nisi vulputate fringilla. Donec
-                      lacinia congue felis in faucibus.
-                    </div>
-                  </div>
-                  <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-0">Media heading</h5>
-                      Cras sit amet nibh libero, in gravida nulla. Nulla vel
-                      metus scelerisque ante sollicitudin. Cras purus odio,
-                      vestibulum in vulputate at, tempus viverra turpis. Fusce
-                      condimentum nunc ac nisi vulputate fringilla. Donec
-                      lacinia congue felis in faucibus.
-                    </div>
-                  </div>
-                  <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-0">Media heading</h5>
-                      Cras sit amet nibh libero, in gravida nulla. Nulla vel
-                      metus scelerisque ante sollicitudin. Cras purus odio,
-                      vestibulum in vulputate at, tempus viverra turpis. Fusce
-                      condimentum nunc ac nisi vulputate fringilla. Donec
-                      lacinia congue felis in faucibus.
-                    </div>
-                  </div>
+                  <Comments
+                    routeId={this.state.route_id}
+                    addComment={this.props.addComment}
+                    user={this.props.user}
+                  />
                 </div>
               </div>
             </div>
@@ -167,7 +141,10 @@ export class RoutesViewer extends Component {
 }
 
 const mapStateToProps = state => ({
-  route: state.route.route
+  route: state.route.route,
+  user: state.auth.user
 });
 
-export default connect(mapStateToProps, { getSingleRoute })(RoutesViewer);
+export default connect(mapStateToProps, { getSingleRoute, addComment })(
+  RoutesViewer
+);

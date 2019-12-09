@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 from django.http import HttpResponse
 from .models import Parks, Routes, Boulder_Routes, Sport_Routes, Traditional_Routes, Post
+from users.models import Comment, User
 from django.http import JsonResponse
 from django.db import connection
 import json
@@ -12,6 +13,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import PostSerializer
+from datetime import datetime
 
 
 def index(request):
@@ -107,6 +109,38 @@ def add_park(request):
             cursor.execute(query)
         return JsonResponse(data, safe=False)
 
+
+@csrf_exempt
+def add_comment(request):
+    if request.method == 'POST':
+        request_body = request.body
+        json_string = request_body.decode('utf8')
+        data = json.loads(json_string)
+        now = datetime.now()
+        date = now.strftime("%Y/%m/%d %H:%M:%S")
+        print(date)
+        query = 'INSERT INTO users_comment VALUES(\'' + \
+            data['email'] + '\',\'' + data['routeId'] + '\',\'' + date + '\',\'' + data['commentText'] + '\');'
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+        return JsonResponse(data, safe=False)
+
+@csrf_exempt
+def get_comments(request):
+    comments = []
+    if request.method == 'POST':
+        request_body = request.body
+        json_string = request_body.decode('utf8')
+        query = "SELECT * FROM users_comments WHERE route_id = \'" + \
+            data['route_id'] + 'ORDER BY date_posted DESC \';'
+        select_query = Comment.objects.raw(query)
+        print(query + " yields " + str(len(select_query)))
+        for row in select_query:
+           query2 = "SELECT name FROM users_user WHERE email = \'" + \
+               row.author_email + '\';'
+            username = User.objects.raw(query2)
+           comments.append({"username": username, "text": row.text, "date_posted": row.date_posted})
+        return JsonResponse(comments, safe=False)
 
 @csrf_exempt
 def add_route(request):
