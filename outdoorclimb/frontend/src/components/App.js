@@ -27,6 +27,9 @@ import store from "../store";
 import { loadUser } from "../actions/auth";
 import ExplorerLogin from "./accounts/ExplorerLogin";
 import ExplorerRegister from "./accounts/ExplorerRegister";
+import Comments from "./comments/Comments";
+import Comment from "./comments/Comment";
+import CommentInput from "./comments/CommentInput";
 
 const alertOptions = {
   timeout: 3000,
@@ -91,6 +94,9 @@ class App extends Component {
                     component={ParksBrowse}
                   />
                   <PrivateRoute exact path="/" component={Dashboard} />
+                  <Route exact path="/comments" component={Comments} />
+                  <Route exact path="/comment" component={Comment} />
+                  <Route exact path="/commentInput" component={CommentInput} />
                 </Switch>
               </div>
             </Fragment>

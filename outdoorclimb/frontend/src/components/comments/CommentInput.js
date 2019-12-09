@@ -56,6 +56,7 @@ export class CommentInput extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log("Hi I am here");
   return { comment: state.comment, user: state.auth.user };
 }
 

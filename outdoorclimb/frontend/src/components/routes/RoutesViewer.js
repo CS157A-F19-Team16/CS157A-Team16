@@ -2,9 +2,7 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { getSingleRoute, getRouteType } from "../../actions/route";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { Comments } from "../comments/Comments";
-import { addComment } from "../../actions/comment";
 
 export class RoutesViewer extends Component {
   state = {
@@ -13,7 +11,6 @@ export class RoutesViewer extends Component {
 
   static propTypes = {
     getSingleRoute: PropTypes.func.isRequired,
-    addComment: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired
   };
 
@@ -125,11 +122,7 @@ export class RoutesViewer extends Component {
             <div>
               <div className="card card-body mt-5">
                 <div className="row">
-                  <Comments
-                    routeId={this.state.route_id}
-                    addComment={this.props.addComment}
-                    user={this.props.user}
-                  />
+                  <Comments />
                 </div>
               </div>
             </div>
@@ -145,6 +138,6 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { getSingleRoute, addComment })(
-  RoutesViewer
-);
+export default connect(mapStateToProps, {
+  getSingleRoute
+})(RoutesViewer);
