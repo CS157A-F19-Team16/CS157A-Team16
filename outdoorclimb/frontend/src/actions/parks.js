@@ -31,7 +31,7 @@ export const getParks = () => dispatch => {
     });
 };
 
-export const addPark = (parkName, location) => dispatch => {
+export const addPark = (parkName, location, parkProfile) => dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -40,7 +40,8 @@ export const addPark = (parkName, location) => dispatch => {
 
   const body = JSON.stringify({
     parkName,
-    location
+    location,
+    parkProfile
   });
   axios
     .post("/routesapp/addPark/", body, config)

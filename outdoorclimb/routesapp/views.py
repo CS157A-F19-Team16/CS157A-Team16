@@ -24,7 +24,7 @@ def routes_parks_list(request):
     # parks needs to be json serializable
     data = []
     for row in parks:
-        data.append({'name': row.name, 'location': row.location})
+        data.append({'name': row.name, 'location': row.location, 'profile_picture': row.profile_picture})
     return JsonResponse(data, safe=False)
 
 
@@ -102,7 +102,7 @@ def add_park(request):
         json_string = request_body.decode('utf8')
         data = json.loads(json_string)
         query = 'INSERT INTO routesapp_parks VALUES(\'' + \
-            data['parkName'] + '\',\'' + data['location'] + '\');'
+            data['parkName'] + '\',\'' + data['location'] + '\',\'' + data['parkProfile'] + '\');'
         with connection.cursor() as cursor:
             cursor.execute(query)
         return JsonResponse(data, safe=False)

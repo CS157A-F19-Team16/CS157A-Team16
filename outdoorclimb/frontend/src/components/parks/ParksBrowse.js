@@ -31,7 +31,7 @@ export class ParksBrowse extends Component {
                   <img
                     className="card-img-top"
                     src={
-                      "https://boxoffice.hotdocs.ca/images/user/bc_2338/Dawn-Wall1.jpg"
+                      "/static/" + park.profile_picture.substring(7)
                     }
                   />
                   <div className="card-body">
