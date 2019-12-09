@@ -151,7 +151,7 @@ def get_comments(request):
         for row in select_query:
            query2 = "SELECT name FROM users_user WHERE email = \'" + \
                row.author_email + '\';'
-            username = User.objects.raw(query2)
+           username = User.objects.raw(query2)
            comments.append({"username": username, "text": row.text, "date_posted": row.date_posted})
         return JsonResponse(comments, safe=False)
 
