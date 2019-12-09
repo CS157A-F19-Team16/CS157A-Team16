@@ -23,3 +23,9 @@ def register_explorer(request):
         with connection.cursor() as cursor:
             cursor.execute(query)
         return JsonResponse(data, safe=False)
+
+
+@csrf_exempt
+def add_comment(request):
+    print("Trying to add")
+    return None
