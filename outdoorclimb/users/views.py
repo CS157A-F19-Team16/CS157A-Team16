@@ -29,3 +29,9 @@ def register_explorer(request):
 def add_comment(request):
     print("Trying to add")
     return None
+
+
+@csrf_exempt
+def get_comments(request):
+    print("Trying to add")
+    return None

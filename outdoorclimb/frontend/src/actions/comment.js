@@ -13,7 +13,7 @@ export const getComments = routeId => {
   });
 
   axios
-    .post("/users/getComment", body, config)
+    .post("/users/getComments/", body, config)
     .then(res => {
       dispatch({
         type: GET_COMMENTS_SUCCESS,
