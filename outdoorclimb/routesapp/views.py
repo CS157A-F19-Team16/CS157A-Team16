@@ -141,12 +141,15 @@ def add_comment(request):
 @csrf_exempt
 def get_comments(request):
     comments = []
+    print("get comments query")
     if request.method == 'POST':
         request_body = request.body
         json_string = request_body.decode('utf8')
+        print("get comments query")
         query = "SELECT * FROM users_comments WHERE route_id = \'" + \
             data['route_id'] + 'ORDER BY date_posted DESC \';'
         select_query = Comment.objects.raw(query)
+        print("get comments success")
         print(query + " yields " + str(len(select_query)))
         for row in select_query:
            query2 = "SELECT name FROM users_user WHERE email = \'" + \

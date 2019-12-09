@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_COMMENT_FAIL, ADD_COMMENT_SUCCESS, GET_COMMENT_FAIL, GET_COMMENT_SUCCESS } from "./types";
+import { ADD_COMMENT_FAIL, ADD_COMMENT_SUCCESS, GET_COMMENTS_SUCCESS } from "./types";
 
 export const getComments = routeId => {
   const config = {
@@ -12,6 +12,8 @@ export const getComments = routeId => {
     routeId
   });
 
+  console.log("Attempting to get comment");
+
   axios
     .post("/users/getComments/", body, config)
     .then(res => {
@@ -21,9 +23,7 @@ export const getComments = routeId => {
       });
     })
     .catch(err => {
-      dispatch({
-        type: GET_COMMENTS_FAIL
-      });
+      console.log(err);
     });
 };
 
