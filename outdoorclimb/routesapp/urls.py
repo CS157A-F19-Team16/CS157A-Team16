@@ -1,6 +1,6 @@
 from rest_framework import routers
 from .api import ParksViewSet, RocksViewSet, RoutesViewSet, Boulder_RoutesViewSet, Sport_RoutesViewSet, Traditional_RoutesViewSet, Pictures_of_RoutesViewSet, PitchesViewSet
-from .views import routes_park_detail, query_route, routes_parks_list, add_park, add_route, search_route, PostView, get_routes_of_park
+from .views import routes_park_detail, query_route, routes_parks_list, add_park, add_route, search_route, PostView, get_routes_of_park, add_comment, get_comments
 from django.urls import path
 
 router = routers.DefaultRouter()
@@ -25,5 +25,7 @@ urlpatterns = [
          get_routes_of_park, name="get_routes_of_park"),
     path("routesapp/searchRoutes/", search_route, name="search_route"),
     path("routesapp/singleRoute/", query_route, name="query_route"),
-    path('posts/', PostView.as_view(), name='posts_list')
+    path('posts/', PostView.as_view(), name='posts_list'),
+    path('users/addComment', add_comment, name = 'add_comment'),
+    path('users/getComments', get_comments, name = 'get_comments')
 ]

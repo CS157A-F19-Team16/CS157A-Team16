@@ -15,9 +15,15 @@ export class CommentInput extends Component {
     commentText: ""
   };
 
+  onChange = e => 
+    this.setState({
+      commentText: e.target.value
+    });
+
   onSubmit = e => {
     e.preventDefault();
     const { commentText } = this.state;
+    console.log(commentText);
     this.props.addComment(
       this.props.user.email,
       this.props.routeId,
@@ -42,6 +48,7 @@ export class CommentInput extends Component {
             id="commentTextArea"
             rows="3"
             cols="50"
+            onChange = {this.onChange}
           ></textarea>
           <button
             className="btn btn-primary"
