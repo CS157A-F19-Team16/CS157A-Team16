@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_PARKS, ADD_PARK_SUCCESS, ADD_PARK_FAIL } from "./types";
+import {
+  GET_PARKS,
+  ADD_PARK_SUCCESS,
+  ADD_PARK_FAIL,
+  GET_PARKS_FAILURE
+} from "./types";
 
 export const getParks = () => dispatch => {
   axios
@@ -12,10 +17,13 @@ export const getParks = () => dispatch => {
     })
     .catch(function(error) {
       console.log(error.config);
+      dispatch({
+        type: GET_PARKS_FAILURE
+      });
     });
 };
 
-export const addPark = (parkName, location) => dispatch => {
+export const addPark = (parkName, location, parkProfile) => dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -24,7 +32,8 @@ export const addPark = (parkName, location) => dispatch => {
 
   const body = JSON.stringify({
     parkName,
-    location
+    location,
+    parkProfile
   });
   axios
     .post("/routesapp/addPark/", body, config)

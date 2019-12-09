@@ -4,11 +4,14 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addPark } from "../../actions/parks";
 import { returnErrors, createMessage } from "../../actions/messages";
+import axios from "axios";
 
 export class AddPark extends Component {
   state = {
     parkName: "",
-    location: ""
+    location: "",
+    fileName: "Choose File",
+    image: null
   };
 
   static propTypes = {
@@ -19,15 +22,51 @@ export class AddPark extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+  
+  handleImageChange(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    
+    reader.onloadend = () => {
+      this.setState({
+        image: file,
+        fileName: file.name
+      })
+    }
+    
+    reader.readAsDataURL(file);
+  }
 
   onSubmit = e => {
     e.preventDefault();
-    const { parkName, location } = this.state;
+    const { parkName,location,image} = this.state;
     if (parkName != "" && location != "") {
-      this.props.addPark(parkName, location);
+
+      let form_data = new FormData();
+      form_data.append("image", image, image.name);
+      let url = "http://localhost:8000/api/posts/";
+      var parkProfile = '';
+      axios
+        .post(url, form_data, {
+          headers: {
+            "content-type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          console.log(res.data);
+          parkProfile = res.data.image;
+          console.log("url is " + parkProfile);
+          this.props.addPark(parkName, location, parkProfile);
+        })
+        .catch(err => console.log(err));
+
       this.setState({
         parkName: "",
-        location: ""
+        location: "",
+        fileName: "Choose File",
+        image: null
       });
       this.props.createMessage({ addedPark: "Successfully added a park" });
     }
@@ -94,12 +133,13 @@ export class AddPark extends Component {
                     className="custom-file-input"
                     id="parkEnterProfile"
                     aria-describedby="inputGroupFileAddon01"
+                    onChange={e => this.handleImageChange(e)}
                   />
                   <label
                     className="custom-file-label"
                     htmlFor="parkEnterProfile"
                   >
-                    Choose file
+                    {this.state.fileName}
                   </label>
                   <small id="parkEnterProfile" className="form-text text-muted">
                     Please make sure it is a clear and complete photo.

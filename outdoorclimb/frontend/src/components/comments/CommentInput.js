@@ -23,6 +23,7 @@ export class CommentInput extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { commentText } = this.state;
+    console.log(commentText);
     this.props.addComment(
       this.props.user.email,
       this.props.routeId,
