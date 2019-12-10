@@ -81,6 +81,7 @@ def find_route_type(route_id):
     return routeType
 
 
+
 @csrf_exempt
 def get_routes_of_park(request):
     routes = []

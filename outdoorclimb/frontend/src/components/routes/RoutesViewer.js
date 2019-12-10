@@ -169,8 +169,8 @@ export class RoutesViewer extends Component {
                   {this.props.comments.map(comment => (
                     <div className="media">
                       <div className="media-body">
-                        <h5 className="mt-0">{comment.username}</h5>
-                        {comment.text}
+                        <h5 className="mt-0">{comment[0].username}</h5>
+                        {comment[0].text}
                       </div>
                     </div>
                   ))}

@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.db import connection
 from collections import namedtuple
 import json
+from datetime import datetime
 
 
 # Create your views here.
@@ -25,11 +26,20 @@ def register_explorer(request):
             cursor.execute(query)
         return JsonResponse(data, safe=False)
 
-
 @csrf_exempt
 def add_comment(request):
-    print("Trying to add")
-    return None
+    if request.method == 'POST':
+        request_body = request.body
+        json_string = request_body.decode('utf8')
+        data = json.loads(json_string)
+        now = datetime.now()
+        date = now.strftime("%Y/%m/%d %H:%M:%S")
+        print(date)
+        query = 'INSERT INTO users_comment VALUES(\'' + \
+            data['email'] + '\',\'' + data['routeId'] + '\',\'' + date + '\',\'' + data['commentText'] + '\');'
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+        return JsonResponse(data, safe=False)
 
 
 @csrf_exempt
