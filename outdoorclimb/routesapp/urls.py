@@ -26,6 +26,6 @@ urlpatterns = [
     path("routesapp/searchRoutes/", search_route, name="search_route"),
     path("routesapp/singleRoute/", query_route, name="query_route"),
     path('posts/', PostView.as_view(), name='posts_list'),
-    path('users/addComment', add_comment, name = 'add_comment'),
-    path('users/getComments', get_comments, name = 'get_comments')
+    path('users/addComment/', add_comment, name = 'add_comment'),
+    path('users/getComments/', get_comments, name = 'get_comments')
 ]
