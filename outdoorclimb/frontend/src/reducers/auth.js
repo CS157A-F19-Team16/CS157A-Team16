@@ -66,6 +66,7 @@ export default function(state = initialState, action) {
     case REGISTER_FAIL:
       localStorage.removeItem("token");
       return {
+        isExplorerAuthenticated: false,
         token: null,
         user: null,
         isAuthenticated: false,

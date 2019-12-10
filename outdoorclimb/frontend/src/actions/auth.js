@@ -147,6 +147,9 @@ export const logout = () => (dispatch, getState) => {
       });
     })
     .catch(err => {
+      dispatch({
+        type: LOGOUT_SUCCESS
+      });
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
