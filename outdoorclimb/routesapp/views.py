@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 from django.http import HttpResponse
 from .models import Parks, Routes, Boulder_Routes, Sport_Routes, Traditional_Routes, Post
+from users.models import Comment, User
 from django.http import JsonResponse
 from django.db import connection
 import json
@@ -12,6 +13,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import PostSerializer
+from datetime import datetime
 
 
 def index(request):
@@ -24,7 +26,8 @@ def routes_parks_list(request):
     # parks needs to be json serializable
     data = []
     for row in parks:
-        data.append({'name': row.name, 'location': row.location})
+        data.append({'name': row.name, 'location': row.location,
+                     'profile_picture': row.profile_picture})
     return JsonResponse(data, safe=False)
 
 
@@ -78,6 +81,7 @@ def find_route_type(route_id):
     return routeType
 
 
+
 @csrf_exempt
 def get_routes_of_park(request):
     routes = []
@@ -94,19 +98,20 @@ def get_routes_of_park(request):
                            "description": row.description, "grade": row.grade, "rating": row.rating, "profile_picture": row.profile_picture})
         return JsonResponse(routes, safe=False)
 
-
 @csrf_exempt
-def add_park(request):
+def add_comment(request):
     if request.method == 'POST':
         request_body = request.body
         json_string = request_body.decode('utf8')
         data = json.loads(json_string)
-        query = 'INSERT INTO routesapp_parks VALUES(\'' + \
-            data['parkName'] + '\',\'' + data['location'] + '\');'
+        now = datetime.now()
+        date = now.strftime("%Y/%m/%d %H:%M:%S")
+        print(date)
+        query = 'INSERT INTO users_comment VALUES(\'' + \
+            data['email'] + '\',\'' + data['routeId'] + '\',\'' + date + '\',\'' + data['commentText'] + '\');'
         with connection.cursor() as cursor:
             cursor.execute(query)
         return JsonResponse(data, safe=False)
-
 
 @csrf_exempt
 def add_route(request):
@@ -131,6 +136,20 @@ def add_route(request):
                                route_id + '\',\'' + blank + '\',%s);', [0])
             else:
                 print("ERROR: Did not add this route to any other tables")
+        return JsonResponse(data, safe=False)
+
+
+@csrf_exempt
+def add_park(request):
+    if request.method == 'POST':
+        request_body = request.body
+        json_string = request_body.decode('utf8')
+        data = json.loads(json_string)
+        query = 'INSERT INTO routesapp_parks VALUES(\'' + \
+            data['parkName'] + '\',\'' + data['location'] + \
+                '\',\'' + data['parkProfile'] + '\');'
+        with connection.cursor() as cursor:
+            cursor.execute(query)
         return JsonResponse(data, safe=False)
 
 

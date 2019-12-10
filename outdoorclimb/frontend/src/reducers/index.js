@@ -7,6 +7,7 @@ import messages from "./messages";
 import parks from "./parks";
 import routes from "./routes";
 import route from "./route";
+import comment from "./comment";
 
 export default combineReducers({
   users,
@@ -15,5 +16,6 @@ export default combineReducers({
   messages,
   parks,
   routes,
-  route
+  route,
+  comment
 });

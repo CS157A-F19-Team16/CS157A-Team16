@@ -6,6 +6,7 @@ from django.db import models
 class Parks(models.Model):
     name = models.CharField(max_length=100, primary_key=True)
     location = models.CharField(max_length=100)
+    profile_picture = models.CharField(max_length=1000)
 
 # Combined with relation to Park
 

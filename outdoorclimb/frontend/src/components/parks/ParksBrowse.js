@@ -16,34 +16,31 @@ export class ParksBrowse extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div className="card-deck mt-3">
-          {this.props.parks.map(park => (
-            <div key={park.name} className="col-sm-6 mt-3">
-              <div className="card">
-                <Link
-                  to={{
-                    pathname: "/routesbrowser",
-                    query: { parkkey: park.name }
-                  }}
-                  className="nav-link"
-                >
-                  <img
-                    className="card-img-top"
-                    src={
-                      "https://boxoffice.hotdocs.ca/images/user/bc_2338/Dawn-Wall1.jpg"
-                    }
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{park.name}</h5>
-                    <p className="card-text">{park.location}</p>
-                  </div>
-                </Link>
-              </div>
+      <div className="card-deck mt-3">
+        {this.props.parks.map(park => (
+          <div key={park.name} className="col-sm-6 mt-3">
+            <div>{console.log(park.name)}</div>
+            <div className="card">
+              <Link
+                to={{
+                  pathname: "/routesbrowser",
+                  query: { parkkey: park.name }
+                }}
+                className="nav-link"
+              >
+                <img
+                  className="card-img-top"
+                  src={"/static/" + park.profile_picture.substring(7)}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{park.name}</h5>
+                  <p className="card-text">{park.location}</p>
+                </div>
+              </Link>
             </div>
-          ))}
-        </div>
-      </Fragment>
+          </div>
+        ))}
+      </div>
     );
   }
 }

@@ -98,8 +98,8 @@ export class Header extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
-});
+function mapStateToProps(state) {
+  return { auth: state.auth };
+}
 
 export default connect(mapStateToProps, { logout })(Header);

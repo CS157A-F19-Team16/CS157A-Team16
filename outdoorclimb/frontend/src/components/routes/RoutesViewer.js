@@ -2,15 +2,20 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { getSingleRoute, getRouteType } from "../../actions/route";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { addComment, getComments } from "../../actions/comment";
 
 export class RoutesViewer extends Component {
   state = {
-    route_id: ""
+    route_id: "",
+    commentText: ""
   };
 
   static propTypes = {
-    getSingleRoute: PropTypes.func.isRequired
+    getSingleRoute: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    addComment: PropTypes.func.isRequired,
+    getComments: PropTypes.func.isRequired,
+    comments: PropTypes.array.isRequired
   };
 
   componentDidMount() {
@@ -19,15 +24,28 @@ export class RoutesViewer extends Component {
       route_id: foo
     });
     this.props.getSingleRoute(foo);
+    this.props.getComments(foo);
   }
+
+  onCommentChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    const { route_id, commentText } = this.state;
+    console.log(commentText);
+    this.props.addComment(this.props.user.email, route_id, commentText);
+    this.setState({
+      commentText: ""
+    });
+    e.preventDefault();
+  };
 
   render() {
     //TODO: Display this link
-    if (this.props.route != null) {
-      console.log(this.props.route[0].profile_picture);
-    } else {
-      console.log("Route is not null");
-    }
     return (
       <div>
         <form className="py-5">
@@ -123,6 +141,51 @@ export class RoutesViewer extends Component {
                 </div>
               </div>
             </div>
+            <div>
+              <div className="card card-body mt-5">
+                <div className="row">
+                  <div className="form-group">
+                    <label htmlFor="commentTextArea">
+                      {this.props.user ? this.props.user.username : "Guest"}
+                    </label>
+                    <textarea
+                      className="form-control"
+                      id="commentTextArea"
+                      rows="3"
+                      cols="50"
+                      name="commentText"
+                      value={this.state.commentText}
+                      onChange={this.onCommentChange.bind(this)}
+                    ></textarea>
+                    <button
+                      className="btn btn-primary"
+                      onClick={this.onSubmit.bind(this)}
+                    >
+                      Comment
+                    </button>
+                  </div>
+                </div>
+                {this.props.comments
+                  ? this.props.comments.map(comment => (
+                      <div className="row">
+                        <div
+                          key={
+                            comment.username +
+                            comment.text +
+                            comment.date_posted
+                          }
+                          className="media"
+                        >
+                          <div className="media-body">
+                            <h5 className="mt-0">{comment.username}</h5>
+                            {comment.text}
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  : console.log("No comments")}
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -131,7 +194,13 @@ export class RoutesViewer extends Component {
 }
 
 const mapStateToProps = state => ({
-  route: state.route.route
+  route: state.route.route,
+  user: state.auth.user,
+  comments: state.comment.comments
 });
 
-export default connect(mapStateToProps, { getSingleRoute })(RoutesViewer);
+export default connect(mapStateToProps, {
+  getSingleRoute,
+  addComment,
+  getComments
+})(RoutesViewer);
