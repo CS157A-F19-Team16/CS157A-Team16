@@ -121,7 +121,7 @@ export class ExplorerRegister extends Component {
     }
   };
 
-  componentDidUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
     const newValue = nextProps.isAuthenticated;
     const {
       username,
