@@ -144,37 +144,46 @@ export class RoutesViewer extends Component {
             <div>
               <div className="card card-body mt-5">
                 <div className="row">
-                  <div>
-                    <div className="form-group">
-                      <label htmlFor="commentTextArea">
-                        {this.props.user ? this.props.user.username : "Guest"}
-                      </label>
-                      <textarea
-                        className="form-control"
-                        id="commentTextArea"
-                        rows="3"
-                        cols="50"
-                        name="commentText"
-                        value={this.state.commentText}
-                        onChange={this.onCommentChange.bind(this)}
-                      ></textarea>
-                      <button
-                        className="btn btn-primary"
-                        onClick={this.onSubmit.bind(this)}
-                      >
-                        Comment
-                      </button>
-                    </div>
+                  <div className="form-group">
+                    <label htmlFor="commentTextArea">
+                      {this.props.user ? this.props.user.username : "Guest"}
+                    </label>
+                    <textarea
+                      className="form-control"
+                      id="commentTextArea"
+                      rows="3"
+                      cols="50"
+                      name="commentText"
+                      value={this.state.commentText}
+                      onChange={this.onCommentChange.bind(this)}
+                    ></textarea>
+                    <button
+                      className="btn btn-primary"
+                      onClick={this.onSubmit.bind(this)}
+                    >
+                      Comment
+                    </button>
                   </div>
-                  {this.props.comments.map(comment => (
-                    <div className="media">
-                      <div className="media-body">
-                        <h5 className="mt-0">{comment[0].username}</h5>
-                        {comment[0].text}
-                      </div>
-                    </div>
-                  ))}
                 </div>
+                {this.props.comments
+                  ? this.props.comments.map(comment => (
+                      <div className="row">
+                        <div
+                          key={
+                            comment.username +
+                            comment.text +
+                            comment.date_posted
+                          }
+                          className="media"
+                        >
+                          <div className="media-body">
+                            <h5 className="mt-0">{comment.username}</h5>
+                            {comment.text}
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  : console.log("No comments")}
               </div>
             </div>
           </div>
