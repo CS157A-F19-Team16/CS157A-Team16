@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.db import connection
+from collections import namedtuple
 import json
 
 
@@ -38,17 +39,27 @@ def get_comments(request):
         request_body = request.body
         json_string = request_body.decode('utf8')
         data = json.loads(json_string)
-        print("get comments query")
         query = "SELECT * FROM users_comment WHERE route_id = \'" + \
-            data['routeId'] + 'ORDER BY date_posted DESC \';'
+            data['routeId'] + '\';'
+        print(query)
         with connection.cursor() as cursor:
-            select_query = Comment.objects.raw(query)
-            print(query + " yields " + str(len(select_query)))
-            for row in select_query:
+            cursor.execute(query)
+            # print(dictfetchall(cursor))
+            for row in namedtuplefetchall(cursor):
                 query2 = "SELECT name FROM users_user WHERE email = \'" + \
                     row.author_email + '\';'
-                print("get username")
-                username = User.objects.raw(query2)
-                print("get username success")
-                comments.append({"username": username, "text": row.text, "date_posted": row.date_posted})
+                with connection.cursor() as cursor2:
+                    cursor2.execute(query2)
+                    username = cursor2.fetchone()
+                    comments.append({"username": username[0], "text": row.text, "date_posted": row.date_posted})
+        for c in comments:
+            print(c)
         return JsonResponse(comments, safe=False)
+
+def namedtuplefetchall(cursor):
+    "Return all rows from a cursor as a namedtuple"
+    desc = cursor.description
+    nt_result = namedtuple('Result', [col[0] for col in desc])
+    return [nt_result(*row) for row in cursor.fetchall()]
+
+
