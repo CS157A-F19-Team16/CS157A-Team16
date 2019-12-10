@@ -98,6 +98,20 @@ def get_routes_of_park(request):
                            "description": row.description, "grade": row.grade, "rating": row.rating, "profile_picture": row.profile_picture})
         return JsonResponse(routes, safe=False)
 
+@csrf_exempt
+def add_comment(request):
+    if request.method == 'POST':
+        request_body = request.body
+        json_string = request_body.decode('utf8')
+        data = json.loads(json_string)
+        now = datetime.now()
+        date = now.strftime("%Y/%m/%d %H:%M:%S")
+        print(date)
+        query = 'INSERT INTO users_comment VALUES(\'' + \
+            data['email'] + '\',\'' + data['routeId'] + '\',\'' + date + '\',\'' + data['commentText'] + '\');'
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+        return JsonResponse(data, safe=False)
 
 @csrf_exempt
 def add_route(request):

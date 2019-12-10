@@ -11,7 +11,7 @@ router.register('api/comment', CommentViewSet, 'comment')
 urlpatterns = [
     path("users/explorerRegister/",
          register_explorer, name="register_explorer"),
-    path("users/addComment", add_comment, name="add_comment"),
+    path("users/addComment/", add_comment, name="add_comment"),
     path("users/getComments/", get_comments, name="get_comments")
 ]
 urlpatterns += router.urls
