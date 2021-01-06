@@ -4,7 +4,7 @@
   "description": "## Project for CS157A",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-alert": "^6.0.0",
