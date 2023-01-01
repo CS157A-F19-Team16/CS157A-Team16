@@ -15,18 +15,18 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "url-loader": "^3.0.0"
+    "url-loader": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
-    "babel-loader": "^8.0.6",
+    "babel-loader": "^8.3.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "file-loader": "^4.3.0",
-    "image-webpack-loader": "^6.0.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "file-loader": "^6.2.0",
+    "image-webpack-loader": "^8.1.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "scripts": {
     "dev": "webpack --mode development --watch ./outdoorclimb/frontend/src/index.js --output ./outdoorclimb/frontend/static/frontend/main.js",
